@@ -35,8 +35,6 @@ export class DataService {
     return [
       {
         id: 1,
-        title: 'ecommerce.plataform',
-        description: 'Full-stack e-commerce application with user authentication, product catalog, shopping cart, and payment integration.',
         techStack: ['Angular', 'Node.js', 'MongoDB', 'Express', 'Stripe'],
         githubUrl: 'https://github.com/username/ecommerce-platform',
         liveUrl: 'https://ecommerce-demo.com',
@@ -45,8 +43,6 @@ export class DataService {
       },
       {
         id: 2,
-        title: 'Task Management App',
-        description: 'Collaborative task management tool with real-time updates, team collaboration features, and project tracking.',
         techStack: ['React', 'TypeScript', 'NestJS', 'PostgreSQL', 'Socket.io'],
         githubUrl: 'https://github.com/username/task-manager',
         liveUrl: 'https://taskmanager-demo.com',
@@ -55,8 +51,6 @@ export class DataService {
       },
       {
         id: 3,
-        title: 'Weather Dashboard',
-        description: 'Modern weather application with location-based forecasts, interactive maps, and detailed analytics.',
         techStack: ['Vue.js', 'Python', 'Django', 'Redis', 'OpenWeather API'],
         githubUrl: 'https://github.com/username/weather-dashboard',
         liveUrl: 'https://weather-demo.com',
@@ -65,8 +59,6 @@ export class DataService {
       },
       {
         id: 4,
-        title: 'Social Media Analytics',
-        description: 'Comprehensive analytics platform for social media metrics with data visualization and reporting features.',
         techStack: ['Angular', 'Spring Boot', 'MySQL', 'Chart.js', 'AWS'],
         githubUrl: 'https://github.com/username/social-analytics',
         imageUrl: 'https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=600',
@@ -74,8 +66,6 @@ export class DataService {
       },
       {
         id: 5,
-        title: 'Sistema de Gestão Empresarial',
-        description: 'Sistema completo de gestão para pequenas e médias empresas com módulos de vendas, estoque e financeiro.',
         techStack: ['Angular', 'NestJS', 'PostgreSQL', 'Docker', 'AWS'],
         githubUrl: 'https://github.com/username/business-management',
         imageUrl: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600',
@@ -83,8 +73,6 @@ export class DataService {
       },
       {
         id: 6,
-        title: 'Portfolio Generator',
-        description: 'Ferramenta para criação automática de portfólios responsivos com templates personalizáveis.',
         techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js'],
         githubUrl: 'https://github.com/username/portfolio-generator',
         liveUrl: 'https://portfolio-gen.com',

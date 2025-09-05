@@ -1,0 +1,17 @@
+<section id="skills" class="skills">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ translate('skills.title') }}</h2>
+      <p class="section-subtitle">{{ translate('skills.subtitle') }}</p>
+    </div>
+    
+    <div class="skills-grid">
+      <div *ngFor="let category of skillCategories" class="skill-category">
+        <h3>{{ category.category }}</h3>
+        <div class="skills-list">
+          <span *ngFor="let skill of category.skills" class="skill-tag">{{ skill }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
