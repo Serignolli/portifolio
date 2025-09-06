@@ -1,0 +1,58 @@
+<section id="projects" class="projects">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ translate('projects.title') }}</h2>
+      <p class="section-subtitle">{{ translate('projects.subtitle') }}</p>
+    </div>
+    
+    <!-- Categories View -->
+    <div *ngIf="showCategories" class="categories-grid">
+      <div *ngFor="let category of projectCategories" class="category-card" (click)="selectCategory(category.id)">
+        <div class="category-icon">{{ category.icon }}</div>
+        <h3>{{ translate('projects.' + category.id + '.title') }}</h3>
+        <p>{{ translate('projects.' + category.id + '.description') }}</p>
+        <div class="project-count">{{ category.projectCount }} {{ category.projectCount === 1 ? 'projeto' : 'projetos' }}</div>
+        <div class="category-arrow">→</div>
+      </div>
+    </div>
+
+    <!-- Projects View -->
+    <div *ngIf="!showCategories" class="projects-view">
+      <div class="projects-header">
+        <button class="back-button" (click)="backToCategories()">
+          {{ translate('projects.backToCategories') }}
+        </button>
+        <h3>{{ translate('projects.' + selectedCategory + '.title') }}</h3>
+      </div>
+      
+      <div class="projects-grid">
+        <div *ngFor="let project of selectedProjects" class="project-card">
+        <div class="project-image">
+          <img [src]="project.imageUrl" [alt]="translate('project.' + project.id + '.title')">
+          <div class="project-overlay">
+            <div class="project-links">
+              <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" rel="noopener noreferrer" 
+                 class="project-link" aria-label="View GitHub repository">
+                <i class="icon-github"></i>
+              </a>
+              <a *ngIf="project.liveUrl" [href]="project.liveUrl" target="_blank" rel="noopener noreferrer" 
+                 class="project-link" aria-label="View live demo">
+                <i class="icon-external"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="project-content">
+          <h3>{{ translate('project.' + project.id + '.title') }}</h3>
+          <p>{{ translate('project.' + project.id + '.description') }}</p>
+          
+          <div class="tech-stack">
+            <span *ngFor="let tech of project.techStack" class="tech-tag">{{ tech }}</span>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>

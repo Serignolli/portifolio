@@ -1,0 +1,32 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-info">
+        <h3>Gabriel Serignolli</h3>
+        <p>{{ translate('footer.tagline') }}</p>
+      </div>
+      
+      <div class="footer-links">
+        <a href="https://github.com/Serignolli" target="_blank" rel="noopener noreferrer" 
+           aria-label="GitHub Profile">
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/gabriel-moreno-serignolli/" target="_blank" rel="noopener noreferrer" 
+           aria-label="LinkedIn Profile">
+          LinkedIn
+        </a>
+        <a href="mailto:tayseri@hotmail.com" aria-label="Email Contact">
+          Email
+        </a>
+      </div>
+      
+      <button class="scroll-to-top" (click)="scrollToTop()" aria-label="Scroll to top">
+        ↑
+      </button>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; {{ currentYear }} Gabriel Serignolli. {{ translate('footer.copyright') }}</p>
+    </div>
+  </div>
+</footer>
