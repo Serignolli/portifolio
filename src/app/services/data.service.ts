@@ -35,62 +35,36 @@ export class DataService {
     return [
       {
         id: 1,
-        title: 'ecommerce.plataform',
-        description: 'Full-stack e-commerce application with user authentication, product catalog, shopping cart, and payment integration.',
-        techStack: ['Angular', 'Node.js', 'MongoDB', 'Express', 'Stripe'],
-        githubUrl: 'https://github.com/username/ecommerce-platform',
-        liveUrl: 'https://ecommerce-demo.com',
-        imageUrl: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600',
+        techStack: ['React.js', 'Lucide React', 'TailwindCSS'],
+        githubUrl: 'Projeto privado - criar página de redirecionamento',
+        liveUrl: 'https://hand-solve.vercel.app/',
+        imageUrl: '/assets/projects/costumer/HandSolve.png',
         category: 'client'
       },
       {
         id: 2,
-        title: 'Task Management App',
-        description: 'Collaborative task management tool with real-time updates, team collaboration features, and project tracking.',
-        techStack: ['React', 'TypeScript', 'NestJS', 'PostgreSQL', 'Socket.io'],
-        githubUrl: 'https://github.com/username/task-manager',
-        liveUrl: 'https://taskmanager-demo.com',
-        imageUrl: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=600',
+        techStack: ['Python', 'Gradio', 'OpenRouter API'],
+        githubUrl: 'https://github.com/Serignolli/Gradio_OpenRouter',
+        liveUrl: 'https://ai-code-reviewer-and-explainer.onrender.com/',
+        imageUrl: '/assets/projects/personal/AiCodeReviewer.png',
         category: 'personal'
       },
       {
         id: 3,
-        title: 'Weather Dashboard',
-        description: 'Modern weather application with location-based forecasts, interactive maps, and detailed analytics.',
-        techStack: ['Vue.js', 'Python', 'Django', 'Redis', 'OpenWeather API'],
-        githubUrl: 'https://github.com/username/weather-dashboard',
-        liveUrl: 'https://weather-demo.com',
-        imageUrl: 'https://images.pexels.com/photos/209831/pexels-photo-209831.jpeg?auto=compress&cs=tinysrgb&w=600',
+        techStack: ['React.js', 'Typescript', 'TailwindCSS', 'Vite'],
+        githubUrl: 'https://github.com/Serignolli/ritual-esquecimento',
+        liveUrl: 'https://ritual-esquecimento.vercel.app/',
+        imageUrl: '/assets/projects/personal/RitualForgetting.png',
         category: 'personal'
       },
       {
         id: 4,
-        title: 'Social Media Analytics',
-        description: 'Comprehensive analytics platform for social media metrics with data visualization and reporting features.',
-        techStack: ['Angular', 'Spring Boot', 'MySQL', 'Chart.js', 'AWS'],
-        githubUrl: 'https://github.com/username/social-analytics',
-        imageUrl: 'https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=600',
-        category: 'client'
-      },
-      {
-        id: 5,
-        title: 'Sistema de Gestão Empresarial',
-        description: 'Sistema completo de gestão para pequenas e médias empresas com módulos de vendas, estoque e financeiro.',
-        techStack: ['Angular', 'NestJS', 'PostgreSQL', 'Docker', 'AWS'],
-        githubUrl: 'https://github.com/username/business-management',
-        imageUrl: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600',
-        category: 'client'
-      },
-      {
-        id: 6,
-        title: 'Portfolio Generator',
-        description: 'Ferramenta para criação automática de portfólios responsivos com templates personalizáveis.',
-        techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js'],
-        githubUrl: 'https://github.com/username/portfolio-generator',
-        liveUrl: 'https://portfolio-gen.com',
-        imageUrl: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600',
+        techStack: ['React.js', 'Typescript', 'TailwindCSS'],
+        githubUrl: 'https://github.com/Serignolli/bike_calculator',
+        liveUrl: 'https://bike-calculator-pied.vercel.app/',
+        imageUrl: '/assets/projects/personal/PedalCalculator.png',
         category: 'personal'
-      }
+      },
     ];
   }
 
