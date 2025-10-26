@@ -72,11 +72,11 @@ export class DataService {
     return [
       {
         category: 'Frontend',
-        skills: ['Angular', 'React', 'Vue.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'SCSS']
+        skills: ['Angular', 'React', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'SCSS']
       },
       {
         category: 'Backend',
-        skills: ['Node.js', 'NestJS', 'Express', 'Python', 'Django', 'Spring Boot', 'RESTful APIs']
+        skills: ['Java', 'Spring Boot', 'Micronaut', 'Python', 'RESTful APIs']
       },
       {
         category: 'Database',
@@ -84,7 +84,7 @@ export class DataService {
       },
       {
         category: 'DevOps & Tools',
-        skills: ['Docker', 'AWS', 'Git', 'CI/CD', 'Linux', 'Nginx', 'Jest', 'Cypress']
+        skills: ['Docker', 'AWS', 'Git', 'CI/CD', 'Linux', 'Nginx', 'Kafka']
       }
     ];
   }
