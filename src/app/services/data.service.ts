@@ -38,7 +38,7 @@ export class DataService {
         techStack: ['React.js', 'Lucide React', 'TailwindCSS'],
         githubUrl: 'Projeto privado - criar página de redirecionamento',
         liveUrl: 'https://hand-solve.vercel.app/',
-        imageUrl: '/assets/projects/costumer/HandSolve.png',
+        imageUrl: '/assets/projects/costumer/handsolve.png',
         category: 'client'
       },
       {
