@@ -65,6 +65,14 @@ export class DataService {
         imageUrl: '/assets/projects/personal/PedalCalculator.png',
         category: 'personal'
       },
+      {
+        id: 5,
+        techStack: ['React.js', 'Typescript', 'TailwindCSS'],
+        githubUrl: 'Projeto privado - criar página de redirecionamento',
+        liveUrl: 'https://lendasforjadas.serignolli.com/',
+        imageUrl: '/assets/projects/costumer/forgedlegends.png',
+        category: 'client'
+      },
     ];
   }
 

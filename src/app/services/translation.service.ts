@@ -57,6 +57,8 @@ export class TranslationService {
       'project.3.description': 'Interactive web app that simulates a digital ritual for letting go of memories, featuring symbolic animations and a mystical responsive design.',
       'project.4.title': 'Pedal Calculator',
       'project.4.description': 'Web app that measures environmental, financial, and energy impact when replacing cars with bikes, featuring interactive comparisons and a responsive design.',
+      'project.5.title': 'Forged Legends',
+      'project.5.description': 'Landing page for a custom RPG miniatures service, focused on visual storytelling, premium experience, and backend-free request handling.',
       
       // Skills
       'skills.title': 'Technical Skills',
@@ -131,6 +133,8 @@ export class TranslationService {
       'project.3.description': 'Aplicação web interativa que simula um ritual digital para esquecer memórias, com animações simbólicas e design místico responsivo.',
       'project.4.title': 'Calculadora do Pedal',
       'project.4.description': 'Aplicação web que calcula impacto ambiental, financeiro e energético ao substituir o carro pela bicicleta, com comparativos interativos e design responsivo.',
+      'project.5.title': 'Lendas Forjadas',
+      'project.5.description': 'Landing page para serviço de miniaturas de RPG personalizadas, focada em narrativa visual, experiência premium e envio de pedidos sem backend.',
       
       // Skills
       'skills.title': 'Habilidades Técnicas',
