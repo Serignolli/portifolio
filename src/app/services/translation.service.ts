@@ -59,6 +59,8 @@ export class TranslationService {
       'project.4.description': 'Web app that measures environmental, financial, and energy impact when replacing cars with bikes, featuring interactive comparisons and a responsive design.',
       'project.5.title': 'Forged Legends',
       'project.5.description': 'Landing page for a custom RPG miniatures service, focused on visual storytelling, premium experience, and backend-free request handling.',
+      'project.6.title': 'Numixy',
+      'project.6.description': 'Daily game with challenges involving mathematical calculations.',
       
       // Skills
       'skills.title': 'Technical Skills',
@@ -135,6 +137,8 @@ export class TranslationService {
       'project.4.description': 'Aplicação web que calcula impacto ambiental, financeiro e energético ao substituir o carro pela bicicleta, com comparativos interativos e design responsivo.',
       'project.5.title': 'Lendas Forjadas',
       'project.5.description': 'Landing page para serviço de miniaturas de RPG personalizadas, focada em narrativa visual, experiência premium e envio de pedidos sem backend.',
+      'project.6.title': 'Numixy',
+      'project.6.description': 'Jogo diário com desafios envolvendo cálculos matemáticos.',
       
       // Skills
       'skills.title': 'Habilidades Técnicas',

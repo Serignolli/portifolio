@@ -73,6 +73,14 @@ export class DataService {
         imageUrl: '/assets/projects/costumer/forgedlegends.png',
         category: 'client'
       },
+      {
+        id: 6,
+        techStack: ['Angular', 'Typescript'],
+        githubUrl: 'Projeto privado - criar página de redirecionamento',
+        liveUrl: 'https://numixy.com/',
+        imageUrl: '/assets/projects/personal/numixy.png',
+        category: 'personal'
+      },
     ];
   }
 
