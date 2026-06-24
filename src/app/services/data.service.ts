@@ -42,30 +42,6 @@ export class DataService {
         category: 'client'
       },
       {
-        id: 2,
-        techStack: ['Python', 'Gradio', 'OpenRouter API'],
-        githubUrl: 'https://github.com/Serignolli/Gradio_OpenRouter',
-        liveUrl: 'https://ai-code-reviewer-and-explainer.onrender.com/',
-        imageUrl: '/assets/projects/personal/AiCodeReviewer.png',
-        category: 'personal'
-      },
-      {
-        id: 3,
-        techStack: ['React.js', 'Typescript', 'TailwindCSS', 'Vite'],
-        githubUrl: 'https://github.com/Serignolli/ritual-esquecimento',
-        liveUrl: 'https://ritual-esquecimento.vercel.app/',
-        imageUrl: '/assets/projects/personal/RitualForgetting.png',
-        category: 'personal'
-      },
-      {
-        id: 4,
-        techStack: ['React.js', 'Typescript', 'TailwindCSS'],
-        githubUrl: 'https://github.com/Serignolli/bike_calculator',
-        liveUrl: 'https://bike-calculator-pied.vercel.app/',
-        imageUrl: '/assets/projects/personal/PedalCalculator.png',
-        category: 'personal'
-      },
-      {
         id: 5,
         techStack: ['React.js', 'Typescript', 'TailwindCSS'],
         githubUrl: 'Projeto privado - criar página de redirecionamento',
@@ -86,6 +62,30 @@ export class DataService {
         techStack: ['Go', 'HTML', 'Pure Stdlib'],
         githubUrl: 'https://github.com/Serignolli/port-watch',
         imageUrl: '/assets/projects/personal/portWatch.png',
+        category: 'personal'
+      },
+      {
+        id: 2,
+        techStack: ['Python', 'Gradio', 'OpenRouter API'],
+        githubUrl: 'https://github.com/Serignolli/Gradio_OpenRouter',
+        liveUrl: 'https://ai-code-reviewer-and-explainer.onrender.com/',
+        imageUrl: '/assets/projects/personal/AiCodeReviewer.png',
+        category: 'personal'
+      },
+      {
+        id: 4,
+        techStack: ['React.js', 'Typescript', 'TailwindCSS'],
+        githubUrl: 'https://github.com/Serignolli/bike_calculator',
+        liveUrl: 'https://bike-calculator-pied.vercel.app/',
+        imageUrl: '/assets/projects/personal/PedalCalculator.png',
+        category: 'personal'
+      },
+      {
+        id: 3,
+        techStack: ['React.js', 'Typescript', 'TailwindCSS', 'Vite'],
+        githubUrl: 'https://github.com/Serignolli/ritual-esquecimento',
+        liveUrl: 'https://ritual-esquecimento.vercel.app/',
+        imageUrl: '/assets/projects/personal/RitualForgetting.png',
         category: 'personal'
       },
     ];
