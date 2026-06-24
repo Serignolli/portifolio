@@ -45,9 +45,10 @@ export class PrivateRepoModalComponent implements OnInit, OnDestroy {
   redirect() {
     this.clearTimer();
     if (this.project.liveUrl) {
-      window.open(this.project.liveUrl, '_blank', 'noopener,noreferrer');
+      window.location.href = this.project.liveUrl;
+    } else {
+      this.closed.emit();
     }
-    this.closed.emit();
   }
 
   close() {
