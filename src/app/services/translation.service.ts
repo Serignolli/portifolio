@@ -61,7 +61,9 @@ export class TranslationService {
       'project.5.description': 'Landing page for a custom RPG miniatures service, focused on visual storytelling, premium experience, and backend-free request handling.',
       'project.6.title': 'Numixy',
       'project.6.description': 'Daily game with challenges involving mathematical calculations.',
-      
+      'project.7.title': 'Port Watch',
+      'project.7.description': 'Cross-platform desktop tool built with Go that monitors active network ports and lets you kill processes directly from a browser-based UI — no dependencies, single binary.',
+
       // Skills
       'skills.title': 'Technical Skills',
       'skills.subtitle': 'Technologies I use to build robust and scalable applications',
@@ -139,7 +141,9 @@ export class TranslationService {
       'project.5.description': 'Landing page para serviço de miniaturas de RPG personalizadas, focada em narrativa visual, experiência premium e envio de pedidos sem backend.',
       'project.6.title': 'Numixy',
       'project.6.description': 'Jogo diário com desafios envolvendo cálculos matemáticos.',
-      
+      'project.7.title': 'Port Watch',
+      'project.7.description': 'Ferramenta desktop multiplataforma em Go que monitora portas de rede ativas e permite encerrar processos diretamente por uma interface no navegador — sem dependências, binário único.',
+
       // Skills
       'skills.title': 'Habilidades Técnicas',
       'skills.subtitle': 'Tecnologias que utilizo para construir aplicações robustas e escaláveis',

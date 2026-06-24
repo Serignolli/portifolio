@@ -81,6 +81,13 @@ export class DataService {
         imageUrl: '/assets/projects/personal/numixy.png',
         category: 'personal'
       },
+      {
+        id: 7,
+        techStack: ['Go', 'HTML', 'Pure Stdlib'],
+        githubUrl: 'https://github.com/Serignolli/port-watch',
+        imageUrl: '/assets/projects/personal/portWatch.png',
+        category: 'personal'
+      },
     ];
   }
 
