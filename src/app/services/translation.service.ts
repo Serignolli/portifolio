@@ -48,6 +48,17 @@ export class TranslationService {
       'projects.client.title': 'Client Projects', 
       'projects.client.description': 'Projects developed for companies and clients with real business impact',
       
+      // Private Repo Modal
+      'private.title': 'Private Repository',
+      'private.message': 'This repository is private and is not publicly accessible.',
+      'private.redirectSite': 'You will be redirected to the project website in',
+      'private.redirectBack': 'You will be redirected back to the portfolio in',
+      'private.seconds': 'seconds.',
+
+      // Projects count
+      'projects.projectSingular': 'project',
+      'projects.projectPlural': 'projects',
+
       // Individual Projects
       'project.1.title': 'Hand Solve Landing Page',
       'project.1.description': 'Responsive page showcasing a degreaser product line, featuring animated carousel, informative sections, and WhatsApp integration.',
@@ -128,6 +139,17 @@ export class TranslationService {
       'projects.client.title': 'Projetos para Clientes',
       'projects.client.description': 'Projetos desenvolvidos para empresas e clientes com impacto real nos negócios',
       
+      // Private Repo Modal
+      'private.title': 'Repositório Privado',
+      'private.message': 'Este repositório é privado e não possui acesso público.',
+      'private.redirectSite': 'Você será redirecionado para o site do projeto em',
+      'private.redirectBack': 'Você será redirecionado de volta ao portfólio em',
+      'private.seconds': 'segundos.',
+
+      // Projects count
+      'projects.projectSingular': 'projeto',
+      'projects.projectPlural': 'projetos',
+
       // Individual Projects
       'project.1.title': 'Landing Page Hand Solve',
       'project.1.description': 'Página responsiva para apresentação de linha de produtos de desengraxantes, com carrossel animado, seções explicativas e integração com WhatsApp.',
@@ -203,7 +225,9 @@ export class TranslationService {
 
   translate(key: string): string {
     const currentLang = this.currentLanguageSubject.value;
-    return this.translations[currentLang]?.[key] || key;
+    return this.translations[currentLang]?.[key]
+      || this.translations['en']?.[key]
+      || key;
   }
 
   get currentLanguage(): string {

@@ -1,0 +1,19 @@
+<div class="modal-backdrop" (click)="close()" role="dialog" aria-modal="true" [attr.aria-label]="translate('private.title')">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="close()" [attr.aria-label]="'Close'">✕</button>
+
+    <div class="modal-icon">🔒</div>
+    <h2>{{ translate('private.title') }}</h2>
+    <p class="modal-message">{{ translate('private.message') }}</p>
+
+    <div class="countdown-ring">
+      <span>{{ countdown }}</span>
+    </div>
+
+    <p class="redirect-info">
+      {{ project.liveUrl ? translate('private.redirectSite') : translate('private.redirectBack') }}
+      <strong>{{ countdown }}</strong>
+      {{ translate('private.seconds') }}
+    </p>
+  </div>
+</div>

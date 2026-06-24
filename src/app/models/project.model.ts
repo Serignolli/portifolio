@@ -5,6 +5,7 @@ export interface Project {
   liveUrl?: string;
   imageUrl?: string;
   category: 'personal' | 'client';
+  isPrivateRepo?: boolean;
 }
 
 export interface ProjectCategory {

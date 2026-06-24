@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslationService } from '../../services/translation.service';
 
 @Component({
@@ -7,12 +8,20 @@ import { TranslationService } from '../../services/translation.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  styleUrls: ['./footer.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {
   currentYear = new Date().getFullYear();
 
-  constructor(private translationService: TranslationService) {}
+  constructor(
+    private translationService: TranslationService,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.translationService.currentLanguage$
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.cdr.markForCheck());
+  }
 
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });

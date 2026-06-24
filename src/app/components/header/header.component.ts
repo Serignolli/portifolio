@@ -1,5 +1,6 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../../services/theme.service';
 import { TranslationService } from '../../services/translation.service';
 
@@ -8,29 +9,38 @@ import { TranslationService } from '../../services/translation.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
   isScrolled = false;
   isDarkMode = false;
   currentLanguage = 'en';
-  
+
   constructor(
     private themeService: ThemeService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private cdr: ChangeDetectorRef
   ) {
-    this.themeService.isDarkMode$.subscribe(isDark => {
-      this.isDarkMode = isDark;
-    });
-    
-    this.translationService.currentLanguage$.subscribe(language => {
-      this.currentLanguage = language;
-    });
+    this.themeService.isDarkMode$
+      .pipe(takeUntilDestroyed())
+      .subscribe(isDark => {
+        this.isDarkMode = isDark;
+        this.cdr.markForCheck();
+      });
+
+    this.translationService.currentLanguage$
+      .pipe(takeUntilDestroyed())
+      .subscribe(language => {
+        this.currentLanguage = language;
+        this.cdr.markForCheck();
+      });
   }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.isScrolled = window.pageYOffset > 50;
+    this.cdr.markForCheck();
   }
 
   scrollToSection(sectionId: string) {

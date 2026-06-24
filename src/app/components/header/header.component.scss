@@ -36,9 +36,12 @@
       padding: 0;
       gap: 2rem;
 
-      li a {
+      li button {
+        background: none;
+        border: none;
         color: var(--text-secondary);
-        text-decoration: none;
+        font-family: inherit;
+        font-size: inherit;
         font-weight: 500;
         cursor: pointer;
         transition: color 0.3s ease;
@@ -120,7 +123,7 @@
       .nav-links {
         gap: 1rem;
         
-        li a {
+        li button {
           font-size: 0.9rem;
         }
       }

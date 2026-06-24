@@ -36,26 +36,26 @@ export class DataService {
       {
         id: 1,
         techStack: ['React.js', 'Lucide React', 'TailwindCSS'],
-        githubUrl: 'Projeto privado - criar página de redirecionamento',
         liveUrl: 'https://hand-solve.vercel.app/',
         imageUrl: '/assets/projects/costumer/handsolve.png',
-        category: 'client'
+        category: 'client',
+        isPrivateRepo: true
       },
       {
         id: 5,
         techStack: ['React.js', 'Typescript', 'TailwindCSS'],
-        githubUrl: 'Projeto privado - criar página de redirecionamento',
         liveUrl: 'https://lendasforjadas.serignolli.com/',
         imageUrl: '/assets/projects/costumer/forgedlegends.png',
-        category: 'client'
+        category: 'client',
+        isPrivateRepo: true
       },
       {
         id: 6,
         techStack: ['Angular', 'Typescript'],
-        githubUrl: 'Projeto privado - criar página de redirecionamento',
         liveUrl: 'https://numixy.com/',
         imageUrl: '/assets/projects/personal/numixy.png',
-        category: 'personal'
+        category: 'personal',
+        isPrivateRepo: true
       },
       {
         id: 7,
