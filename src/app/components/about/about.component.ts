@@ -15,4 +15,8 @@ export class AboutComponent {
   translate(key: string): string {
     return this.translationService.translate(key);
   }
+
+  get yearsOfExperience(): number {
+    return new Date().getFullYear() - 2023;
+  }
 }
