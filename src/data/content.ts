@@ -50,8 +50,8 @@ export const groupContent: Record<
   lab: {
     heading: { pt: 'Jogos e brincadeiras', en: 'Games & fun stuff' },
     subtitle: {
-      pt: 'Nem tudo precisa ser sério. Pra me divertir também faço jogos, brincadeiras e umas coisas bestas. Dois exemplos:',
-      en: 'Not everything has to be serious. For fun I also make games, toys and some silly things. Two examples:',
+      pt: 'Nem tudo precisa ser sério. Pra divertir também faço jogos, brincadeiras e uns experimentos. Alguns exemplos:',
+      en: 'Not everything has to be serious. For fun I also make games, toys and a few experiments. Some examples:',
     },
   },
   client: {

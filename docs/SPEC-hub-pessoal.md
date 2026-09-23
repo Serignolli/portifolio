@@ -556,16 +556,8 @@ sem compartilhar código.
 padrão e esconde o botão de visitar. Ele nunca aponta pra um link que não existe, e o
 botão volta sozinho quando a URL for preenchida.
 
-**Conferir os padrões.** Dois jeitos, os dois fora do site publicado:
-
-- `npm run padroes` escreve `exemplos/padroes/` (pasta ignorada pelo git, é saída
-  gerada): um SVG por data especial, mais um `index.html` que põe os feriados e duas
-  semanas de dias comuns lado a lado. Aceita um
-  ano (`npm run padroes -- 2027`) pras datas móveis. O script importa o mesmo código da
-  página, então o que sai ali é o que aparece no site; as cores são lidas de
-  `tokens.css`, não copiadas à mão
-- Na página, o desenho é sempre o do dia. Pra ver outros dias sem esperar a virada, o
-  caminho é o script acima, que aceita qualquer data
+**Conferir os padrões.** Na página, o desenho é sempre o do dia; não há ferramenta
+pra ver outros dias.
 
 ---
 

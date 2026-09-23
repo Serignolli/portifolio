@@ -46,11 +46,11 @@ um link "Código" à parte. Repositório privado não entra.
 Projetos com `status: 'soon'` não precisam de link: o card não é clicável e ganha o
 selo "em breve".
 
-Os prints originais, em tamanho cheio, ficam em `shots-src/`. Os de `public/shots/` saem
-deles com ffmpeg (ajuste o último número do `crop` pra mover o recorte na horizontal):
+Os prints de `public/shots/` saem do print original (fora do repositório) com ffmpeg
+(ajuste o último número do `crop` pra mover o recorte na horizontal):
 
 ```bash
-ffmpeg -i shots-src/X.png -vf "scale=1200:750:force_original_aspect_ratio=increase,crop=1200:750:0:0" -c:v libwebp -quality 78 public/shots/x.webp
+ffmpeg -i X.png -vf "scale=1200:750:force_original_aspect_ratio=increase,crop=1200:750:0:0" -c:v libwebp -quality 78 public/shots/x.webp
 ```
 
 ## O catálogo
@@ -87,20 +87,6 @@ Troca todo dia. As formas ficam em `src/data/artPatterns.ts`:
 Clicar no desenho abre o modal que credita o gerador: fecha no × do canto, e o único
 botão do corpo leva pro gerador. Enquanto `artGenerator.url` (em `content.ts`) estiver
 vazia, esse botão não aparece e volta sozinho quando a URL for preenchida.
-
-### Conferir os padrões
-
-```bash
-npm run padroes            # ano atual
-npm run padroes -- 2027    # outro ano, pras datas móveis
-```
-
-Escreve `exemplos/padroes/`: um SVG por data especial e um `index.html` com os feriados
-e duas semanas de dias comuns lado a lado. Usa o mesmo código da página e lê as cores de
-`tokens.css`.
-
-A pasta está no `.gitignore`: são arquivos gerados, pesam ~1,7MB e voltam com um comando.
-
 
 ## Currículo
 
