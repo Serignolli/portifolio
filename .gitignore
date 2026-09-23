@@ -1,4 +1,11 @@
-.angular
-dist
 node_modules
-.env
+dist
+.vercel
+*.local
+*.log
+.DS_Store
+Thumbs.db
+
+# Exemplos dos padrões do hero: são gerados, pesam ~1,7MB e saem inteiros de
+# `npm run padroes`. Ficam no disco pra consulta, fora do repositório.
+exemplos/

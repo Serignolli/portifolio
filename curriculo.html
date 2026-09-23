@@ -1,0 +1,61 @@
+<!doctype html>
+<!-- lang nasce pt-BR: crawlers não rodam o toggle client-side. O LanguageProvider
+     troca este atributo depois, já no navegador. -->
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <!-- Único lugar fora de tokens.css com cor literal: meta não lê variável de CSS.
+         Precisa acompanhar o --bg quando a paleta mudar. -->
+    <meta name="theme-color" content="#08080C" />
+
+    <title>Currículo, Gabriel Serignolli, desenvolvedor full stack</title>
+    <meta
+      name="description"
+      content="Gabriel Serignolli, desenvolvedor full stack com foco em back-end, microsserviços e performance. Experiência, formação, habilidades e currículo em PDF."
+    />
+
+    <link rel="canonical" href="https://serignolli.com/curriculo" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://serignolli.com/curriculo" />
+    <meta property="og:title" content="Currículo, Gabriel Serignolli, desenvolvedor full stack" />
+    <meta
+      property="og:description"
+      content="Gabriel Serignolli, desenvolvedor full stack com foco em back-end, microsserviços e performance. Experiência, formação, habilidades e currículo em PDF."
+    />
+    <meta property="og:image" content="https://serignolli.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Gabriel Moreno Serignolli",
+        "url": "https://serignolli.com/",
+        "jobTitle": "Full-Stack Software Developer",
+        "sameAs": [
+          "https://github.com/Serignolli",
+          "https://www.linkedin.com/in/gabriel-moreno-serignolli/"
+        ]
+      }
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/inter-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/curriculo.tsx"></script>
+  </body>
+</html>

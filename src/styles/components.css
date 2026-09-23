@@ -1,0 +1,1040 @@
+/* Mobile-first. Nada aqui usa cor literal, tudo vem de tokens.css. */
+
+/* ---------- Layout ---------- */
+
+.layout {
+  position: relative;
+  /* Contexto de empilhamento próprio: o enfeite fica atrás do conteúdo e à frente
+     do brilho de fundo. O clip horizontal impede que ele crie barra de rolagem. */
+  isolation: isolate;
+  overflow-x: clip;
+  min-height: 100vh;
+}
+
+.page {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-inline: var(--space-2);
+  padding-block: var(--space-3);
+}
+
+/* ---------- Trilho lateral (só desktop) ---------- */
+/* No mobile ele não existe: barra fixa em tela pequena come área útil. */
+
+.rail {
+  display: none;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 78vh;
+  padding-block: var(--space-4);
+}
+
+.hero__content {
+  position: relative;
+}
+
+.hero__name {
+  margin-block: 0.15rem;
+  font-size: clamp(2.5rem, 13vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+}
+
+.hero__name-accent {
+  background-image: linear-gradient(100deg, var(--accent-hover), var(--accent-blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero__tagline {
+  margin-block: 0.15rem;
+  color: var(--text-muted);
+  max-width: 54ch;
+}
+
+.hero__cta {
+  display: inline-block;
+  margin-top: var(--space-3);
+  padding: 0.7rem 1.6rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.hero__cta:hover {
+  background: var(--accent);
+  color: var(--text);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+/* Tags decorativas: abrem em cima, fecham embaixo. */
+.code-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.code-tag {
+  display: block;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.7;
+  letter-spacing: 0.05em;
+  user-select: none;
+  pointer-events: none;
+}
+
+.code-tag--indent {
+  padding-left: var(--space-3);
+}
+
+/* Segundo nível: o rodapé está dentro do body. */
+.code-tag--indent-2 {
+  padding-left: calc(var(--space-3) * 2);
+}
+
+.code-block--end {
+  margin-top: var(--space-2);
+}
+
+/* Separa o bloco do parágrafo do bloco do título. */
+.code-tag--spaced {
+  margin-top: var(--space-2);
+}
+
+/*
+ * O desenho. Fica no nível do layout, e não dentro da coluna de conteúdo, pra poder
+ * ocupar a sobra de largura à direita sem ser cortado. É um botão porque abre o crédito
+ * do gerador, mas continua atrás de tudo: o z-index negativo garante que ele nunca
+ * cubra texto nem roube clique do conteúdo.
+ */
+.hero-art {
+  position: absolute;
+  z-index: -1;
+  top: 46vh;
+  right: var(--space-2);
+  width: min(92vw, 90vh, 620px);
+  padding: 0;
+  border: 0;
+  background: none;
+  transform: translateY(-50%);
+  opacity: 0.38;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+
+.hero-art:hover,
+.hero-art:focus-visible {
+  opacity: 0.72;
+}
+
+.hero-art__svg {
+  width: 100%;
+  height: auto;
+}
+
+/* ---------- Modal do padrão ---------- */
+
+/* Fixed, e não relative: o <dialog> modal precisa continuar preso à janela. Com
+   relative ele é posto no topo do documento e o foco rola a página até lá, o que
+   aparece em qualquer modal aberto longe do hero. */
+.art-modal {
+  position: fixed;
+  max-width: 26rem;
+  margin: auto;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+  color: var(--text);
+}
+
+.art-modal::backdrop {
+  background: var(--backdrop);
+}
+
+/* Fechar é o × do canto, não um botão de texto: o único botão do corpo é o de visitar. */
+.art-modal__x {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  display: flex;
+  padding: 0.35rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.art-modal__x:hover {
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.art-modal__heading {
+  /* Espaço pro × não encostar no título. */
+  padding-right: var(--space-4);
+  margin-bottom: var(--space-2);
+  font-size: 1.25rem;
+}
+
+.art-modal__text {
+  margin-bottom: var(--space-2);
+  color: var(--text-muted);
+}
+
+.art-modal__text strong {
+  color: var(--text);
+  font-weight: 650;
+}
+
+.art-modal__visit {
+  display: inline-block;
+  margin-top: var(--space-1);
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.art-modal__visit:hover {
+  background: var(--accent);
+  color: var(--text);
+}
+
+.art-modal__later {
+  margin-top: var(--space-3);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.hero__scroll {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Canto superior direito da tela inteira, longe do desenho e do texto. */
+.layout > .lang-toggle {
+  position: absolute;
+  z-index: 3;
+  top: var(--space-2);
+  right: var(--space-2);
+}
+
+.lang-toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: var(--space-1) 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.lang-toggle:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.lang-toggle__on {
+  color: var(--text);
+}
+
+.lang-toggle__off,
+.lang-toggle__sep {
+  color: var(--text-muted);
+}
+
+/* ---------- Seções ---------- */
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-top: var(--space-4);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  /* Respiro quando a âncora do trilho para a rolagem aqui. */
+  scroll-margin-top: var(--space-3);
+}
+
+.section p {
+  color: var(--text-muted);
+  max-width: 68ch;
+}
+
+/* Título de seção com um traço curto no tom de destaque. */
+.section > h2,
+.group__heading {
+  position: relative;
+  padding-left: var(--space-2);
+}
+
+.section > h2::before,
+.group__heading::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.22em;
+  bottom: 0.22em;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(var(--accent), var(--accent-deep));
+}
+
+.group__subtitle {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  max-width: 60ch;
+}
+
+/* ---------- Projetos ---------- */
+
+.from-banner {
+  padding: var(--space-2);
+  background: var(--accent-soft);
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+}
+
+.from-banner strong {
+  color: var(--text);
+  font-weight: 650;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-1);
+}
+
+.grid--tool {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+/*
+ * O laboratório é compacto de propósito, mas não apagado. O teto de 300px na coluna
+ * garante que um card de lab continue menor que um de tool mesmo quando é o único
+ * do grupo (com 1fr ele esticaria pra linha inteira e ficariam do mesmo tamanho).
+ */
+.grid--lab {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 300px));
+  justify-content: start;
+  gap: var(--space-2);
+}
+
+.grid--client {
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+}
+
+.card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+a.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card--from {
+  border-color: var(--accent);
+}
+
+.card__shot {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.card--soon .card__shot {
+  opacity: 0.45;
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+}
+
+.card__name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 620;
+  line-height: 1.25;
+}
+
+.card__description {
+  color: var(--text-muted);
+}
+
+/* Cards do laboratório: menores e mais leves, mesma proporção de imagem. */
+.card--lab {
+  background: var(--bg-2);
+}
+
+.card--lab .card__body {
+  padding: var(--space-2);
+  gap: 0.25rem;
+}
+
+.card--lab .card__name {
+  font-size: 1rem;
+}
+
+.card--lab .card__description {
+  font-size: 0.875rem;
+}
+
+/* Cards de encomenda: empilhados no mobile, horizontais no desktop. */
+.card--client {
+  background: var(--bg-2);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15em 0.6em;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+}
+
+.badge--soon {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.badge--from {
+  position: absolute;
+  z-index: 1;
+  top: var(--space-2);
+  left: var(--space-2);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  color: var(--accent-text);
+  backdrop-filter: blur(6px);
+}
+
+/* ---------- Freelance ---------- */
+
+.cases {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--text-muted);
+  max-width: 68ch;
+}
+
+.cases li::marker {
+  color: var(--accent);
+}
+
+/* ---------- Currículo ---------- */
+
+.curriculum__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  margin-top: var(--space-1);
+  padding: 0.6rem 1.15rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.curriculum__link:hover {
+  background: var(--accent);
+  color: var(--text);
+}
+
+/* ---------- Chamada para o catálogo ---------- */
+
+.all-cta {
+  padding: var(--space-3);
+  background:
+    linear-gradient(120deg, var(--accent-soft), transparent 70%),
+    var(--bg-2);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+}
+
+.all-cta__count {
+  padding: 0 0.5em;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.curriculum__link:hover .all-cta__count {
+  background: var(--surface);
+}
+
+/* ---------- Catálogo (/projetos) ---------- */
+
+/* O catálogo precisa de largura pras filas: a coluna de texto de 880px é estreita. */
+.page--wide {
+  max-width: 1280px;
+}
+
+.catalog__title {
+  font-size: clamp(2.3rem, 11vw, 3.6rem);
+}
+
+/* Uma faixa: tarja com o nome da categoria, fila de projetos embaixo. */
+.catalog-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  scroll-margin-top: var(--space-3);
+}
+
+.catalog-row__band {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  padding: 0.75rem var(--space-2);
+  background: linear-gradient(90deg, var(--accent-soft), transparent 80%);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+}
+
+.catalog-row__title {
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.catalog-row__count {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.catalog-row__arrows {
+  display: none;
+  gap: 0.4rem;
+  margin-left: auto;
+}
+
+.catalog-row__arrow {
+  display: flex;
+  padding: 0.4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}
+
+.catalog-row__arrow:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.catalog-row__arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* A fila: rola na horizontal e cada card para encaixado na borda. No celular o card
+   seguinte aparece cortado de propósito, é o que avisa que tem mais pra rolar. Com
+   mais espaço a largura é dividida em cards inteiros (3, depois 4), senão sobraria um
+   pedaço de card sem motivo quando a fila cabe quase toda na tela. */
+.catalog-row__list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(78%, 300px);
+  gap: var(--space-2);
+  /* overflow-x: auto também corta na vertical: sem essa folga o card que sobe no
+     hover perde a borda de cima e a sombra, colado na tarja. A margem negativa
+     devolve o espaço, então a fila continua alinhada com a tarja. */
+  margin: calc(-1 * var(--space-1)) calc(-1 * var(--space-1)) 0;
+  padding: var(--space-1) var(--space-1) var(--space-2);
+  scroll-padding-inline: var(--space-1);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.catalog-row__item {
+  display: flex;
+  scroll-snap-align: start;
+}
+
+.catalog-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.catalog-card .card__body {
+  flex: 1;
+  padding: var(--space-2);
+}
+
+.catalog-card .card__name {
+  font-size: 1.0625rem;
+}
+
+.catalog-card .card__description {
+  font-size: 0.9rem;
+}
+
+/* O nome é o link, mas a área clicável é o card inteiro. */
+.catalog-card__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.catalog-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.catalog-card__link:focus-visible {
+  outline: none;
+}
+
+.catalog-card:has(.catalog-card__link:hover),
+.catalog-card:has(.catalog-card__link:focus-visible) {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.catalog-card:has(.catalog-card__link:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Acima da camada do link esticado, senão o clique no código abriria o site. */
+.catalog-card__repo {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: var(--space-1);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.catalog-card__repo:hover {
+  color: var(--accent-text);
+}
+
+/* Etiquetas de tecnologia: stack dos projetos e habilidades do currículo. */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  padding: 0.15em 0.65em;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Página de currículo ---------- */
+
+/* O hero do currículo não ocupa a tela: o conteúdo é o texto logo abaixo. */
+.hero--resume {
+  min-height: auto;
+  padding-block: var(--space-4) var(--space-2);
+}
+
+.hero--resume .hero__name {
+  font-size: clamp(2.1rem, 10vw, 3rem);
+}
+
+.hero__greeting {
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.hero__actions .hero__cta {
+  margin-top: 0;
+}
+
+.hero__cta--ghost {
+  background: none;
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+.hero__cta--ghost:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
+  box-shadow: none;
+}
+
+.highlight {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  align-self: flex-start;
+  margin-top: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+}
+
+.section .highlight {
+  color: var(--text);
+}
+
+.highlight__number {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background-image: linear-gradient(100deg, var(--accent-hover), var(--accent-blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.highlight__text {
+  color: var(--text-muted);
+}
+
+/* Coluna mínima de 300px: os quatro grupos fecham em 2×2 no desktop, não em 3+1. */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.skills__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.skills__heading {
+  font-size: 1rem;
+}
+
+/* ---------- Contato ---------- */
+
+.contact__row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.contact__email {
+  font-size: 1.125rem;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.contact__copy {
+  padding: 0.4rem 0.85rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.contact__copy:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.contact__linkedin {
+  font-size: 0.9375rem;
+}
+
+/* ---------- Rodapé ---------- */
+
+/* O respiro antes do rodapé vive no bloco, pra tag de abertura vir junto com ele
+   e não colada na seção de contato. */
+.footer-block {
+  margin-top: var(--space-5);
+}
+
+.footer {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* ---------- Desktop ---------- */
+
+@media (min-width: 720px) {
+  .page {
+    padding-block: var(--space-3) var(--space-4);
+  }
+
+  .hero__name {
+    font-size: clamp(3.2rem, 7vw, 4.6rem);
+  }
+
+  .card--client {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    align-items: stretch;
+  }
+
+  .card--client .card__shot {
+    height: 100%;
+    border-bottom: none;
+    border-right: 1px solid var(--border);
+  }
+
+  .card--client .card__body {
+    justify-content: center;
+  }
+
+  .catalog-row__arrows {
+    display: flex;
+  }
+
+  .catalog-row__list {
+    grid-auto-columns: calc((100% - 2 * var(--space-2)) / 3);
+  }
+}
+
+@media (min-width: 1280px) {
+  .catalog-row__list {
+    grid-auto-columns: calc((100% - 3 * var(--space-2)) / 4);
+  }
+}
+
+/* O trilho lateral só entra quando sobra largura pra ele ao lado do conteúdo. */
+@media (min-width: 1100px) {
+  .layout {
+    padding-left: var(--rail-w);
+  }
+
+  /* Colado no trilho, não centralizado na tela: o conteúdo começa logo depois do
+     menu e a sobra fica toda à direita. */
+  .page {
+    margin-inline: 0;
+    padding-left: var(--space-4);
+    padding-right: var(--space-3);
+  }
+
+  .rail {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: var(--rail-w);
+    height: 100vh;
+    padding-block: var(--space-3);
+    background: var(--bg-2);
+    border-right: 1px solid var(--border);
+  }
+
+  .rail__mark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding-block: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .rail__initials {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+  }
+
+  .rail__initials-accent {
+    color: var(--accent-text);
+  }
+
+  .rail__role {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .rail__nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rail__link {
+    padding: 0.7rem var(--space-2);
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+    text-align: center;
+    text-decoration: none;
+    transition: color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .rail__link:hover {
+    background: var(--accent-soft);
+    color: var(--accent-text);
+  }
+
+  .rail__social {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: auto;
+    padding-top: var(--space-2);
+  }
+
+  .rail__icon {
+    color: var(--text-faint);
+    transition: color 0.15s ease;
+  }
+
+  .rail__icon:hover {
+    color: var(--accent-text);
+  }
+
+  /* Abre a calha da esquerda pro indicador de rolagem. */
+  .hero__content,
+  .hero .code-block {
+    padding-left: var(--space-5);
+  }
+
+  .hero__scroll {
+    position: absolute;
+    left: 0;
+    bottom: var(--space-3);
+    writing-mode: vertical-rl;
+  }
+
+  .hero-art {
+    top: 46vh;
+    right: var(--space-3);
+    /* O teto em vh é o que impede o corte em cima e embaixo: com o centro em 46vh,
+       90vh de largura encosta nas duas bordas e não passa. */
+    width: min(70vw, 90vh, 1000px);
+    opacity: 0.55;
+  }
+}
+
+/* Seta do "role a página", fica junto do texto em qualquer orientação. */
+.hero__scroll::after {
+  content: " \2193";
+}

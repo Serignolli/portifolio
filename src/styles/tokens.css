@@ -1,0 +1,70 @@
+/*
+ * Único arquivo do projeto com cores literais. Todo componente usa var(--...).
+ * Dark único: sem modo claro, sem toggle de tema.
+ *
+ * Paleta: preto como base, roxo como destaque, azul escuro como segundo tom.
+ * O azul nunca aparece sozinho, ele só fecha os gradientes do roxo.
+ */
+:root {
+  /* superfícies */
+  --bg:           #08080C;   /* preto da página */
+  --bg-2:         #0B0B12;
+  --surface:      #101019;
+  --surface-2:    #16162A;
+  --border:       #22223A;
+  --border-soft:  rgba(139, 92, 246, 0.16);
+
+  /* texto */
+  --text:         #F4F4F8;
+  --text-muted:   #9C9CB4;   /* 7.2:1 sobre --bg, 6.6:1 sobre --surface */
+  --text-faint:   #5B5B78;   /* só em enfeite, nunca em conteúdo */
+
+  /* destaque */
+  --accent:       #8B5CF6;   /* roxo, bordas, fundos, outline de foco */
+  --accent-hover: #A78BFA;
+  /* Texto em roxo usa este tom, não --accent: #8B5CF6 sobre --surface reprova em AA. */
+  --accent-text:  #A78BFA;
+  --accent-blue:  #3B5BDB;   /* azul escuro, fecha os gradientes */
+  --accent-deep:  #1B2A6B;   /* azul mais escuro ainda, fundo dos gradientes */
+  --accent-soft:  rgba(139, 92, 246, 0.14);
+  --accent-glow:  rgba(139, 92, 246, 0.20);
+  --blue-glow:    rgba(59, 91, 219, 0.16);
+
+  /*
+   * Cores só do enfeite do hero, usadas pelos padrões de data especial (Natal,
+   * Halloween, São João...). Não entram em texto, botão nem borda: se aparecerem em
+   * qualquer outro lugar, a identidade roxo/azul do site se perde. Tons dessaturados
+   * de propósito, pra conviverem com o preto sem virar enfeite de loja.
+   */
+  --art-gold:       #D9A93C;
+  --art-amber:      #C8822E;
+  --art-orange:     #C2632C;
+  --art-red:        #B0413E;
+  --art-pink:       #C2568A;
+  --art-green:      #3E9464;
+  --art-green-soft: #6FBF8E;
+  --art-teal:       #3C8E9E;
+
+  /* fundo do modal */
+  --backdrop: rgba(4, 4, 8, 0.72);
+
+  /* espaçamento */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+
+  /* raio e sombra */
+  --radius:    14px;
+  --radius-sm: 8px;
+  --shadow:    0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+
+  /* largura */
+  --maxw:   880px;
+  --rail-w: 156px;
+
+  /* tipografia de enfeite (tags de código do hero) */
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+}
