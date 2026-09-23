@@ -10,16 +10,15 @@ export const GITHUB_URL = 'https://github.com/Serignolli';
  */
 
 /**
- * O gerador que desenha o padrão do hero.
+ * O gerador creditado no modal do desenho do hero.
  *
- * TODO Gabriel: preencher quando o site estiver no ar. Com `url` vazia o modal continua
- * funcionando, só explica o padrão e esconde o botão de visitar, nunca aponta pra um
- * link que não existe. Os nomes dos parâmetros em `params` precisam bater com os que o
- * gerador lê na query string.
+ * O desenho do hero é um desenho do Moiré, e o botão de visitar abre lá o padrão do dia
+ * (os parâmetros saem de `moireURL`, em `data/moire.ts`). Com `url` vazia o modal
+ * esconde o botão.
  */
 export const artGenerator = {
-  name: '',
-  url: '',
+  name: 'Moiré',
+  url: 'https://moire.serignolli.com/',
 };
 
 /**

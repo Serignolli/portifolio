@@ -64,11 +64,26 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 'moire',
+    name: 'Moiré',
+    category: 'tool',
+    url: 'https://moire.serignolli.com/',
+    featured: true,
+    tags: ['React', 'TypeScript', 'SVG'],
+    shot: '/shots/moire.webp',
+    description: {
+      pt: 'Gira uma forma no mesmo centro e cria padrões moiré. O desenho do topo da home sai dele.',
+      en: 'Spins one shape around one center into moiré patterns. The art atop the home page comes from it.',
+    },
+    alt: {
+      pt: 'Moiré com dezesseis elipses giradas formando uma malha em azul e violeta, ao lado dos controles.',
+      en: 'Moiré with sixteen rotated ellipses forming a blue and violet mesh, next to the controls.',
+    },
+  },
+  {
     id: 'portwatch',
     name: 'Port Watch',
     category: 'tool',
-    // Exemplo provisório da home, até o criador de padrões de moiré entrar no lugar.
-    featured: true,
     repo: 'https://github.com/Serignolli/port-watch',
     tags: ['Go', 'HTML'],
     shot: '/shots/portwatch.webp',

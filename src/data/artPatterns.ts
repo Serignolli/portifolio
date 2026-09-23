@@ -1,6 +1,11 @@
 /**
  * Os padrões do desenho do hero.
  *
+ * Todo padrão é um desenho do Moiré (moire.serignolli.com): uma forma girada várias
+ * vezes em torno do mesmo centro. A geometria mora em `moire.ts`; aqui só se decide
+ * QUAL desenho sai em cada dia. Como os parâmetros são os do Moiré, o link do modal abre
+ * lá exatamente o desenho que estava na página.
+ *
  * Regras: o padrão vale por um dia. Em data especial ele tem tema (forma + cores que
  * lembram a data); em dia comum é sorteado, mas sempre na paleta do site, pra a
  * identidade não mudar de cara todo dia.
@@ -9,134 +14,45 @@
  * dia vê o mesmo desenho, e ele troca sozinho na virada. Nada é guardado, nada é pedido
  * ao servidor.
  *
- * Adicionar uma data nova = um `id` em `HOLIDAYS`, um padrão em `THEMES` e o rótulo em
+ * Adicionar uma data nova = um `id` em `FIXED`, um padrão em `THEMES` e o rótulo em
  * `content.artDates`. Nenhum componente é tocado.
  */
 
-/** Nomes de variáveis de tokens.css. Nenhuma cor literal aqui. */
-export type ArtPalette = readonly [string, string, string, string];
+import type { MoireParams } from './moire';
 
-type Base = {
+/** Nomes de variáveis de tokens.css, nas três paradas do degradê do Moiré. Nenhuma cor
+ *  literal aqui. */
+export type ArtPalette = readonly [string, string, string];
+
+export type ArtPattern = {
   /** 'daily' ou o id da data especial. */
   id: string;
-  /** Traços do feixe. Mais traços = fita mais densa. */
-  strokes: number;
-  /** Atraso de fase acumulado entre um traço e o seguinte, em radianos. */
-  phaseStep: number;
-  /** Giro do conjunto, em graus. Só em formas limitadas por raio (ver `rotation`). */
-  rotation: number;
+  params: MoireParams;
   palette: ArtPalette;
 };
 
-export type ArtPattern =
-  | (Base & {
-      kind: 'harmonograph';
-      /** Frequências dos dois pêndulos em cada eixo. */
-      freq: { x1: number; x2: number; y1: number; y2: number };
-      /** Amplitudes. A segunda harmônica é o que enruga a curva. */
-      ampl: { x1: number; x2: number; y1: number; y2: number };
-    })
-  | (Base & {
-      kind: 'rose';
-      /** Pétalas: ímpar dá k pétalas, par dá 2k. */
-      k: number;
-      /** 0 = roseta pura (pétalas). 1 = contorno fechado, só ondulado. */
-      base: number;
-      amp: number;
-      stretchX: number;
-      stretchY: number;
-      /** Segunda harmônica, opcional: recorta os lados do contorno em degraus
-       *  (é o que faz os galhos da árvore de Natal). */
-      k2?: number;
-      amp2?: number;
-    })
-  | (Base & { kind: 'heart'; scale: number })
-  | (Base & {
-      kind: 'flame';
-      /** Quanto mais alto, mais afilada a ponta da gota. */
-      taper: number;
-      /** Ondulação da borda e quantas ondas dão a volta. */
-      ripple: number;
-      ripples: number;
-      /** Largura da chama em relação à altura. */
-      width: number;
-    });
+const SITE: ArtPalette = ['--accent-hover', '--accent', '--accent-blue'];
 
-export const VIEWBOX = 600;
-const CENTER = VIEWBOX / 2;
-/** Raio máximo. Sobra margem pro traço não encostar na borda do viewBox. */
-const RADIUS = 250;
-/** Pontos por traço: denso o bastante pra não aparecer segmento reto. */
-const SAMPLES = 360;
+/** Valores que quase nenhum padrão muda. Cada padrão escreve só o que é dele. */
+const PLAIN: MoireParams = {
+  shape: 'ellipse',
+  w: 250,
+  h: 92,
+  radius: 18,
+  sides: 6,
+  inner: 0.45,
+  n: 16,
+  step: 11.25,
+  scalePct: 0,
+  shrinkEvery: 0,
+  shrinkPct: 6,
+  opPeriod: 0,
+  opMin: 0.35,
+  strokeW: 1.2,
+  gradAngle: 35,
+};
 
-const SITE: ArtPalette = ['--accent-hover', '--accent', '--accent-blue', '--accent-deep'];
-
-/* ---------- Desenho ---------- */
-
-/** Um traço do feixe, já escrito como atributo `d` de um path. */
-export function strokePath(pattern: ArtPattern, index: number): string {
-  const phase = index * pattern.phaseStep;
-  // Cada traço um tico menor que o anterior: é o que dá o aninhamento da fita.
-  const shrink = 1 - index * 0.022;
-  let d = '';
-
-  for (let i = 0; i <= SAMPLES; i++) {
-    const t = (i / SAMPLES) * Math.PI * 2;
-    const [x, y] = point(pattern, t, phase, shrink);
-    d += `${i === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(1)}`;
-  }
-
-  return `${d}Z`;
-}
-
-function point(
-  pattern: ArtPattern,
-  t: number,
-  phase: number,
-  shrink: number,
-): [number, number] {
-  if (pattern.kind === 'harmonograph') {
-    const { freq, ampl } = pattern;
-    return [
-      CENTER +
-        shrink *
-          (ampl.x1 * Math.sin(freq.x1 * t + phase) +
-            ampl.x2 * Math.sin(freq.x2 * t + phase * 2.4)),
-      CENTER +
-        shrink *
-          (ampl.y1 * Math.sin(freq.y1 * t + 0.6) +
-            ampl.y2 * Math.cos(freq.y2 * t + phase * 3.1)),
-    ];
-  }
-
-  if (pattern.kind === 'rose') {
-    const { k, base, amp, stretchX, stretchY, k2 = 0, amp2 = 0 } = pattern;
-    // Normaliza pelo raio máximo possível, pra qualquer roseta caber igual no quadro.
-    const bruto =
-      base + amp * Math.cos(k * t + phase) + amp2 * Math.cos(k2 * t + phase);
-    const r = (bruto / (base + amp + amp2)) * RADIUS * shrink;
-    return [CENTER + r * Math.cos(t) * stretchX, CENTER + r * Math.sin(t) * stretchY];
-  }
-
-  if (pattern.kind === 'flame') {
-    // Curva da gota: ponta em t = 0, parte redonda do lado oposto. Fica deitada, e o
-    // `rotation` do padrão é que a põe de pé. A ondulação é o que faz lamber.
-    const { taper, ripple, ripples, width } = pattern;
-    const wobble = 1 + ripple * Math.cos(ripples * t + phase * 2.5);
-    const s = RADIUS * shrink * wobble;
-    return [
-      CENTER + Math.cos(t) * s,
-      CENTER + Math.sin(t) * Math.sin(t / 2) ** taper * s * width,
-    ];
-  }
-
-  // Coração: a paramétrica clássica. O y é invertido porque no SVG ele cresce pra baixo.
-  const s = (pattern.scale * RADIUS * shrink) / 17;
-  const x = 16 * Math.sin(t) ** 3;
-  const y =
-    13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
-  return [CENTER + x * s + Math.sin(phase) * 6, CENTER - y * s];
-}
+const moire = (params: Partial<MoireParams>): MoireParams => ({ ...PLAIN, ...params });
 
 /* ---------- Sorteio do dia ---------- */
 
@@ -161,80 +77,72 @@ function random(seed: number): () => number {
   };
 }
 
-/** Valores sorteados a cada dia. São eles que fazem o desenho virar outro de manhã. */
-const FREQ_X = [2, 3, 4, 5, 6] as const;
-const FREQ_Y = [3, 4, 5, 6, 7] as const;
-const FREQ_X2 = [5, 7, 8, 9, 11] as const;
-const FREQ_Y2 = [4, 6, 7, 8, 10] as const;
-/** Pétalas possíveis da roseta. Mudar `k` é a diferença mais visível que existe aqui. */
-const ROSE_K = [3, 4, 5, 6, 7, 8, 9, 12] as const;
+/** Formas do sorteio, com peso. O círculo fica de fora: girado no próprio centro ele
+ *  não muda, e as cópias cairiam todas umas sobre as outras. */
+const DAILY_SHAPES = [
+  'ellipse',
+  'ellipse',
+  'ellipse',
+  'rect',
+  'polygon',
+  'star',
+  'line',
+] as const;
 
 /**
  * O padrão de um dia comum.
  *
- * O peso está no sorteio do dia: família da curva, frequências e número de pétalas são
- * escolhidos de novo toda manhã, e são justamente os parâmetros que mais mudam a cara do
- * desenho. Quem abre a página dois dias seguidos vê duas peças diferentes, não a mesma
- * respirando.
+ * Forma, número de cópias, passo do giro e as variações de escala e opacidade são
+ * sorteados de novo toda manhã. Quem abre a página dois dias seguidos vê duas peças
+ * diferentes, não a mesma respirando.
  *
- * Por baixo continua uma onda lenta sobre o número do dia, mas só como viés das
- * amplitudes e do giro: ela dá uma maré à sequência ao longo das semanas sem segurar o
- * desenho preso ao de ontem.
+ * Por baixo corre uma onda lenta sobre o número do dia, só como viés do ângulo do
+ * degradê: dá uma maré à sequência ao longo das semanas sem prender o desenho ao de
+ * ontem.
  *
  * A paleta não entra no sorteio: a cor é a assinatura do site, e trocar ela todo dia
  * faria a página parecer outra.
  */
 function dailyPattern(seed: string, day: number): ArtPattern {
   const rnd = random(hash(seed));
-  /** Sorteio do dia. É o que domina. */
   const pick = <T,>(list: readonly T[]): T => list[Math.floor(rnd() * list.length)];
-  const spread = (amount: number) => (rnd() - 0.5) * 2 * amount;
-  /** Maré lenta do calendário, entra só como viés. */
-  const wave = (period: number, offset = 0) => Math.sin(day / period + offset);
+  /** Inteiro entre `min` e `max`, os dois inclusos. */
+  const int = (min: number, max: number) => min + Math.floor(rnd() * (max - min + 1));
+  /** Decimal entre `min` e `max`, com duas casas: o link sai legível. */
+  const num = (min: number, max: number) => +(min + rnd() * (max - min)).toFixed(2);
 
-  const strokes = 6 + Math.floor(rnd() * 7);
-  const phaseStep = 0.06 + rnd() * 0.14;
+  const shape = pick(DAILY_SHAPES);
+  // Variações que servem pra qualquer forma: uma cópia a cada tantas encolhe, e a
+  // opacidade ondula ao longo das cópias. Cada uma aparece em mais ou menos metade dos
+  // dias, pra nem todo desenho ter os mesmos enfeites.
+  const common: Partial<MoireParams> = {
+    shrinkEvery: rnd() < 0.5 ? int(3, 5) : 0,
+    shrinkPct: int(4, 8),
+    opPeriod: rnd() < 0.6 ? int(4, 7) : 0,
+    opMin: num(0.3, 0.5),
+    strokeW: num(1, 1.4),
+    gradAngle: Math.round(35 + Math.sin(day / 11) * 30),
+  };
 
-  if (rnd() < 0.45) {
-    return {
-      id: 'daily',
-      kind: 'rose',
-      k: pick(ROSE_K),
-      // Uma vez a cada quatro dias, mais ou menos, a roseta abre em pétalas soltas em
-      // vez de contorno fechado. É a virada mais brusca do conjunto, e é de propósito.
-      base: rnd() < 0.25 ? 0 : 1,
-      amp: 0.22 + rnd() * 0.38,
-      stretchX: 1 + wave(13, 0.6) * 0.05 + spread(0.1),
-      stretchY: 1 - wave(13, 0.6) * 0.05 + spread(0.1),
-      strokes,
-      phaseStep,
-      rotation: wave(19, 0.3) * 15 + spread(30),
-      palette: SITE,
-    };
+  let params: Partial<MoireParams>;
+  if (shape === 'ellipse') {
+    const n = int(12, 28);
+    // Metade das vezes fecha certinho em 180°; na outra, um passo solto que torce a
+    // malha e deixa ela orgânica.
+    params = { shape, w: 250, h: int(60, 130), n, step: rnd() < 0.5 ? +(180 / n).toFixed(2) : num(5, 14) };
+  } else if (shape === 'rect') {
+    const square = rnd() < 0.6;
+    params = { shape, w: square ? 210 : 240, h: square ? 210 : int(130, 170), radius: int(8, 40), n: int(16, 28), step: num(3, 8) };
+  } else if (shape === 'polygon') {
+    params = { shape, w: 250, h: 250, sides: int(3, 8), n: int(14, 24), step: num(2, 6) };
+  } else if (shape === 'star') {
+    params = { shape, w: 250, h: 250, sides: int(5, 8), inner: num(0.35, 0.55), n: int(12, 20), step: num(2, 6) };
+  } else {
+    // Leque: linhas abrindo só até um pedaço da volta.
+    params = { shape, w: 300, n: int(25, 45), step: num(2, 4) };
   }
 
-  const x1 = pick(FREQ_X);
-  const y1 = pick(FREQ_Y.filter((f) => f !== x1));
-
-  return {
-    id: 'daily',
-    kind: 'harmonograph',
-    freq: { x1, y1, x2: pick(FREQ_X2), y2: pick(FREQ_Y2) },
-    // Os tetos somados ficam abaixo de 300, o meio do viewBox: assim a curva nunca
-    // encosta na borda do quadro, em nenhuma combinação possível.
-    ampl: {
-      x1: 190 + wave(8, 0.2) * 8 + spread(18),
-      x2: 54 + wave(10, 1.5) * 8 + spread(18),
-      y1: 185 + wave(12, 0.9) * 8 + spread(18),
-      y2: 52 + wave(9, 2.1) * 8 + spread(16),
-    },
-    strokes,
-    phaseStep,
-    // Harmonógrafa não gira: o desenho dela não cabe num círculo, e girar poria uma
-    // ponta pra fora do quadro. Roseta e coração cabem, esses giram à vontade.
-    rotation: 0,
-    palette: SITE,
-  };
+  return { id: 'daily', params: moire({ ...common, ...params }), palette: SITE };
 }
 
 /* ---------- Datas especiais ---------- */
@@ -317,198 +225,93 @@ export function holidayFor(date: Date): string | null {
 
 /**
  * Um padrão por data. A forma é que carrega o tema; a cor só reforça.
- * Estrela, trevo, ovo, coração, teia: tudo sai da mesma roseta, mudando `k` e `amp`.
+ * Tudo sai das formas do Moiré: repetir com giro, ou com passo 0 e escala acumulada,
+ * que aninha as cópias umas dentro das outras.
  */
 const THEMES: Record<string, ArtPattern> = {
   'ano-novo': {
-    // Fogos: muitas pontas finas, feixe bem aberto.
+    // Fogos: estrela de muitas pontas finas, girando pouco a cada cópia.
     id: 'ano-novo',
-    kind: 'rose',
-    k: 12,
-    base: 1,
-    amp: 0.42,
-    stretchX: 1,
-    stretchY: 1,
-    strokes: 11,
-    phaseStep: 0.19,
-    rotation: 0,
-    palette: ['--art-gold', '--art-pink', '--accent', '--accent-deep'],
+    params: moire({ shape: 'star', w: 260, h: 260, sides: 12, inner: 0.38, n: 10, step: 3, opPeriod: 5, opMin: 0.4, strokeW: 1 }),
+    palette: ['--art-gold', '--art-pink', '--accent'],
   },
   carnaval: {
-    // Serpentina: harmonógrafa nervosa, a mais embaralhada do conjunto.
+    // Serpentina: elipses finas com passo solto, a malha mais embaralhada do conjunto.
     id: 'carnaval',
-    kind: 'harmonograph',
-    freq: { x1: 5, x2: 9, y1: 4, y2: 7 },
-    ampl: { x1: 200, x2: 70, y1: 195, y2: 65 },
-    strokes: 10,
-    phaseStep: 0.17,
-    rotation: 0,
-    palette: ['--art-pink', '--art-gold', '--accent', '--accent-blue'],
+    params: moire({ w: 270, h: 70, n: 36, step: 13, shrinkEvery: 5, shrinkPct: 8, opPeriod: 7, strokeW: 1 }),
+    palette: ['--art-pink', '--art-gold', '--accent-blue'],
   },
   pascoa: {
-    // Ovo: k=1 desloca o raio pra um lado só, que é o que faz a ponta. O giro de 90°
-    // põe a parte larga embaixo, como um ovo em pé.
+    // Ovo: ovais em pé, aninhados, cada um um tico menor e mais torto.
     id: 'pascoa',
-    kind: 'rose',
-    k: 1,
-    base: 1,
-    amp: 0.28,
-    // Com o giro de 90°, o stretchX vira a altura e o stretchY a largura: ovo em pé.
-    stretchX: 1.06,
-    stretchY: 0.88,
-    strokes: 9,
-    phaseStep: 0.12,
-    rotation: 90,
-    palette: ['--art-teal', '--art-pink', '--accent', '--accent-blue'],
+    params: moire({ w: 190, h: 250, n: 12, step: 2, scalePct: -5, opPeriod: 4, opMin: 0.45 }),
+    palette: ['--art-teal', '--art-pink', '--accent'],
   },
   'sao-joao': {
-    // Fogueira: chama de verdade, gota afilada de pé com a borda lambendo. Cada traço
-    // do feixe desloca a ondulação, então o conjunto parece fogo se mexendo.
+    // Fogueira: triângulos de pé aninhados, girando de leve, como chama se mexendo.
     id: 'sao-joao',
-    kind: 'flame',
-    taper: 3,
-    ripple: 0.07,
-    ripples: 9,
-    width: 1.5,
-    strokes: 10,
-    phaseStep: 0.26,
-    rotation: -90,
-    palette: ['--art-amber', '--art-orange', '--art-red', '--accent-deep'],
+    params: moire({ shape: 'polygon', w: 240, h: 270, sides: 3, n: 14, step: 2.5, scalePct: -4, opPeriod: 5, opMin: 0.4 }),
+    palette: ['--art-amber', '--art-orange', '--art-red'],
   },
   valentines: {
+    // O Moiré não desenha coração: fica uma flor de pétalas largas, nas cores da data.
     id: 'valentines',
-    kind: 'heart',
-    scale: 0.94,
-    strokes: 9,
-    phaseStep: 0.16,
-    rotation: 0,
-    palette: ['--art-pink', '--art-red', '--accent', '--accent-deep'],
+    params: moire({ w: 250, h: 120, n: 8, step: 22.5, shrinkEvery: 2, shrinkPct: 10, opPeriod: 4, opMin: 0.45 }),
+    palette: ['--art-pink', '--art-red', '--accent'],
   },
   namorados: {
     id: 'namorados',
-    kind: 'heart',
-    scale: 0.94,
-    strokes: 9,
-    phaseStep: 0.16,
-    rotation: 0,
-    palette: ['--art-pink', '--art-red', '--accent', '--accent-deep'],
+    params: moire({ w: 250, h: 120, n: 8, step: 22.5, shrinkEvery: 2, shrinkPct: 10, opPeriod: 4, opMin: 0.45 }),
+    palette: ['--art-pink', '--art-red', '--accent'],
   },
   'st-patricks': {
-    // Trevo de quatro folhas: roseta de k par dá 2k pétalas, então k = 2.
+    // Trevo de quatro folhas: passo de quase 90° alterna deitada e em pé, e a escala
+    // que encolhe põe as folhas umas dentro das outras.
     id: 'st-patricks',
-    kind: 'rose',
-    k: 2,
-    base: 0,
-    amp: 1,
-    stretchX: 1,
-    stretchY: 1,
-    strokes: 8,
-    phaseStep: 0.14,
-    rotation: -18,
-    palette: ['--art-green-soft', '--art-green', '--art-teal', '--accent-deep'],
+    params: moire({ w: 250, h: 100, n: 12, step: 91.5, scalePct: -5 }),
+    palette: ['--art-green-soft', '--art-green', '--art-teal'],
   },
   halloween: {
-    // Teia: muitas pontas curtas e um feixe apertado, que adensa o miolo.
+    // Teia: octógonos aninhados, sem giro, cada um menor que o anterior.
     id: 'halloween',
-    kind: 'rose',
-    k: 8,
-    base: 1,
-    amp: 0.3,
-    stretchX: 1,
-    stretchY: 1,
-    strokes: 12,
-    phaseStep: 0.07,
-    rotation: 22,
-    palette: ['--art-orange', '--art-amber', '--accent', '--accent-deep'],
+    params: moire({ shape: 'polygon', w: 260, h: 260, sides: 8, n: 14, step: 1.5, scalePct: -10, opPeriod: 3, opMin: 0.5 }),
+    palette: ['--art-orange', '--art-amber', '--accent'],
   },
   thanksgiving: {
-    // Folha: uma pétala só, bem pontuda de um lado, esticada e inclinada.
+    // Folha: poucas elipses num leque curto, como nervuras.
     id: 'thanksgiving',
-    kind: 'rose',
-    k: 1,
-    base: 1,
-    amp: 0.8,
-    stretchX: 1.12,
-    stretchY: 0.82,
-    strokes: 9,
-    phaseStep: 0.13,
-    rotation: -24,
-    palette: ['--art-amber', '--art-orange', '--art-red', '--accent-deep'],
+    params: moire({ w: 260, h: 110, n: 10, step: 4, shrinkEvery: 3, shrinkPct: 6, gradAngle: 60 }),
+    palette: ['--art-amber', '--art-orange', '--art-red'],
   },
   maes: {
-    // Flor: seis lóbulos arredondados.
+    // Flor: seis elipses a 30° dão doze pétalas.
     id: 'maes',
-    kind: 'rose',
-    k: 6,
-    base: 1,
-    amp: 0.5,
-    stretchX: 1,
-    stretchY: 1,
-    strokes: 9,
-    phaseStep: 0.12,
-    rotation: 0,
-    palette: ['--art-pink', '--art-teal', '--accent', '--accent-deep'],
+    params: moire({ w: 260, h: 80, n: 6, step: 30, strokeW: 1.4 }),
+    palette: ['--art-pink', '--art-teal', '--accent'],
   },
   pais: {
-    // Escudo: três lóbulos com a ponta pra baixo.
+    // Escudo: hexágonos girando devagar.
     id: 'pais',
-    kind: 'rose',
-    k: 3,
-    base: 1,
-    amp: 0.55,
-    stretchX: 1,
-    stretchY: 1.04,
-    strokes: 9,
-    phaseStep: 0.11,
-    rotation: 180,
-    palette: ['--art-teal', '--accent-blue', '--accent', '--accent-deep'],
+    params: moire({ shape: 'polygon', w: 250, h: 250, sides: 6, n: 16, step: 3.75, shrinkEvery: 4, shrinkPct: 6, opPeriod: 5 }),
+    palette: ['--art-teal', '--accent-blue', '--accent'],
   },
   independencia: {
-    // Losango, como o da bandeira: quatro lóbulos girados 45°.
+    // Losango, como o da bandeira: losangos aninhados, sem giro.
     id: 'independencia',
-    kind: 'rose',
-    k: 4,
-    base: 1,
-    amp: 0.5,
-    // Girado 45°, o losango ocupa menos quadro que as outras formas; o esticão
-    // uniforme devolve a ele o mesmo tamanho aparente.
-    stretchX: 1.25,
-    stretchY: 1.25,
-    strokes: 9,
-    phaseStep: 0.1,
-    rotation: 45,
-    palette: ['--art-green-soft', '--art-gold', '--art-green', '--accent-deep'],
+    params: moire({ shape: 'polygon', w: 290, h: 190, sides: 4, n: 12, step: 0, scalePct: -8, opPeriod: 4, opMin: 0.45 }),
+    palette: ['--art-green-soft', '--art-gold', '--art-green'],
   },
   criancas: {
-    // Cata-vento: cinco pontas tortas, feixe bem girado.
+    // Cata-vento: estrela de cinco pontas bem girada.
     id: 'criancas',
-    kind: 'rose',
-    k: 5,
-    base: 1,
-    amp: 0.45,
-    stretchX: 1.06,
-    stretchY: 0.94,
-    strokes: 10,
-    phaseStep: 0.2,
-    rotation: 28,
-    palette: ['--art-gold', '--art-pink', '--art-teal', '--accent'],
+    params: moire({ shape: 'star', w: 250, h: 250, sides: 5, inner: 0.45, n: 14, step: 5, shrinkEvery: 3, shrinkPct: 6, strokeW: 1 }),
+    palette: ['--art-gold', '--art-pink', '--art-teal'],
   },
   natal: {
-    // Árvore: triângulo de ponta pra cima (k = 3 girado -90°) com uma segunda
-    // harmônica de k = 9 recortando três degraus em cada lado, que são os galhos.
+    // Estrela de Belém: estrelas aninhadas, cada uma menor e um pouco girada.
     id: 'natal',
-    kind: 'rose',
-    k: 3,
-    base: 1,
-    amp: 0.62,
-    k2: 9,
-    amp2: 0.16,
-    stretchX: 1.12,
-    stretchY: 0.9,
-    strokes: 9,
-    phaseStep: 0.1,
-    rotation: -90,
-    palette: ['--art-gold', '--art-green', '--art-green-soft', '--accent-deep'],
+    params: moire({ shape: 'star', w: 260, h: 260, sides: 5, inner: 0.4, n: 10, step: 1.5, scalePct: -8, opPeriod: 4, opMin: 0.45 }),
+    palette: ['--art-gold', '--art-green-soft', '--art-green'],
   },
 };
 
@@ -543,46 +346,4 @@ export function artFor(date: Date): TodayArt {
     holiday,
     seed,
   };
-}
-
-/**
- * Os parâmetros do padrão em forma de query string, pro gerador abrir já mostrando
- * este mesmo desenho.
- *
- * TODO Gabriel: conferir os nomes com o gerador quando ele existir. `seed` e `theme`
- * sozinhos já bastam se o gerador usar este mesmo algoritmo; o resto vai junto pra ele
- * conseguir reconstruir o desenho sem compartilhar código.
- */
-export function artQuery({ pattern, holiday, seed }: TodayArt): string {
-  const round = (value: number) => value.toFixed(3).replace(/\.?0+$/, '');
-  const params: Record<string, string> = {
-    seed,
-    kind: pattern.kind,
-    strokes: String(pattern.strokes),
-    phase: round(pattern.phaseStep),
-    rot: round(pattern.rotation),
-  };
-
-  if (holiday) params.theme = holiday;
-
-  if (pattern.kind === 'harmonograph') {
-    params.fx = `${pattern.freq.x1},${pattern.freq.x2}`;
-    params.fy = `${pattern.freq.y1},${pattern.freq.y2}`;
-    params.ax = `${round(pattern.ampl.x1)},${round(pattern.ampl.x2)}`;
-    params.ay = `${round(pattern.ampl.y1)},${round(pattern.ampl.y2)}`;
-  } else if (pattern.kind === 'rose') {
-    params.k = String(pattern.k);
-    params.base = round(pattern.base);
-    params.amp = round(pattern.amp);
-    params.stretch = `${round(pattern.stretchX)},${round(pattern.stretchY)}`;
-    if (pattern.amp2) params.harm2 = `${pattern.k2},${round(pattern.amp2)}`;
-  } else if (pattern.kind === 'flame') {
-    params.taper = String(pattern.taper);
-    params.ripple = `${round(pattern.ripple)},${pattern.ripples}`;
-    params.width = round(pattern.width);
-  } else {
-    params.scale = round(pattern.scale);
-  }
-
-  return new URLSearchParams(params).toString();
 }

@@ -1,16 +1,26 @@
 import { useCallback, useMemo, useState } from 'react';
 import { content } from '../data/content';
-import { artFor, strokePath, VIEWBOX, type ArtPattern } from '../data/artPatterns';
+import { artFor, type ArtPattern } from '../data/artPatterns';
+import {
+  bounds,
+  f,
+  GRAD_STOPS,
+  gradCoords,
+  opAt,
+  polyPts,
+  scaleAt,
+  type MoireParams,
+} from '../data/moire';
 import { useT } from '../i18n/useT';
 import { ArtModal } from './ArtModal';
 
 /**
  * Enfeite do hero, em SVG inline: nenhuma imagem, nenhuma biblioteca.
  *
- * O traço é uma curva de dois pêndulos (harmonógrafa), uma roseta ou um coração,
- * conforme o padrão do dia. O mesmo traço é repetido com um atraso de fase mínimo, e é
- * o atraso que dá o efeito de fita líquida: as curvas quase se sobrepõem, se cruzam, e
- * o feixe parece escorrer. A forma inteira vem de `data/artPatterns.ts`.
+ * É um desenho do Moiré: uma forma repetida em torno do mesmo centro, cada cópia girando
+ * um pouco mais, e a malha aparece onde as bordas se cruzam. O padrão do dia vem de
+ * `data/artPatterns.ts` e a geometria de `data/moire.ts`, a mesma do gerador, pra o link
+ * do modal abrir lá o mesmo desenho.
  *
  * Clicar abre o modal que credita o gerador.
  */
@@ -39,43 +49,78 @@ export function HeroArt() {
 }
 
 function Drawing({ pattern }: { pattern: ArtPattern }) {
-  const [a, b, c, d] = pattern.palette;
+  const p = pattern.params;
+  const box = bounds(p);
+  const grad = gradCoords(p, box);
 
   return (
     <svg
       className="hero-art__svg"
-      viewBox={`0 0 ${VIEWBOX} ${VIEWBOX}`}
-      width={VIEWBOX}
-      height={VIEWBOX}
+      viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`}
       aria-hidden="true"
       focusable="false"
     >
       <defs>
         {/* Lê os tokens de cor direto: mudou a paleta, mudou o desenho. */}
-        <linearGradient id="hero-art-stroke" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={`var(${a})`} />
-          <stop offset="45%" stopColor={`var(${b})`} />
-          <stop offset="78%" stopColor={`var(${c})`} />
-          <stop offset="100%" stopColor={`var(${d})`} />
+        <linearGradient
+          id="hero-art-stroke"
+          gradientUnits="userSpaceOnUse"
+          x1={grad.x1}
+          y1={grad.y1}
+          x2={grad.x2}
+          y2={grad.y2}
+        >
+          {pattern.palette.map((token, i) => (
+            <stop key={token} offset={GRAD_STOPS[i]} stopColor={`var(${token})`} />
+          ))}
         </linearGradient>
       </defs>
       <g
         fill="none"
         stroke="url(#hero-art-stroke)"
+        strokeWidth={p.strokeW}
+        strokeLinecap="round"
         strokeLinejoin="round"
-        transform={`rotate(${pattern.rotation} ${VIEWBOX / 2} ${VIEWBOX / 2})`}
       >
-        {Array.from({ length: pattern.strokes }, (_, i) => (
-          <path
-            key={i}
-            d={strokePath(pattern, i)}
-            // Traço mais grosso e opaco na frente do feixe, fino e apagado no fundo:
-            // é o que dá profundidade sem precisar de sombra.
-            strokeWidth={(1.5 - i * 0.09).toFixed(2)}
-            opacity={(0.72 - i * 0.045).toFixed(2)}
-          />
+        {Array.from({ length: p.n }, (_, i) => (
+          <Copy key={i} p={p} i={i} />
         ))}
       </g>
     </svg>
   );
+}
+
+/** Uma cópia da forma. Mesmas contas do `shapeEl` do Moiré. */
+function Copy({ p, i }: { p: MoireParams; i: number }) {
+  const sc = scaleAt(p, i);
+  const w = p.w * sc;
+  const h = p.h * sc;
+  const angle = f(p.step * i);
+  const op = opAt(p, i);
+  const common = {
+    transform: angle ? `rotate(${angle})` : undefined,
+    opacity: op < 1 ? f(op) : undefined,
+  };
+
+  switch (p.shape) {
+    case 'ellipse':
+      return <ellipse rx={f(w / 2)} ry={f(h / 2)} {...common} />;
+    case 'circle':
+      return <circle r={f(w / 2)} {...common} />;
+    case 'rect':
+      return (
+        <rect
+          x={f(-w / 2)}
+          y={f(-h / 2)}
+          width={f(w)}
+          height={f(h)}
+          rx={f(Math.min(p.radius * sc, w / 2, h / 2))}
+          {...common}
+        />
+      );
+    case 'line':
+      return <line x1={f(-w / 2)} x2={f(w / 2)} {...common} />;
+    default:
+      return <polygon points={polyPts(p, sc)} {...common} />;
+  }
 }

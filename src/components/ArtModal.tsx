@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { artGenerator, content } from '../data/content';
-import { artQuery, type TodayArt } from '../data/artPatterns';
+import type { TodayArt } from '../data/artPatterns';
+import { moireURL } from '../data/moire';
 import { useT } from '../i18n/useT';
 
 type ArtModalProps = {
@@ -36,6 +37,15 @@ export function ArtModal({ art, open, onClose }: ArtModalProps) {
 
   const themeLabel = art.holiday ? content.artDates[art.holiday] : undefined;
   const hasLink = artGenerator.url !== '';
+
+  // O Moiré não conhece os tokens do site: as cores vão resolvidas em hex, lidas do
+  // tokens.css já aplicado. Assim a paleta continua morando só lá.
+  const href = useMemo(() => {
+    if (!hasLink) return '';
+    const styles = getComputedStyle(document.documentElement);
+    const colors = art.pattern.palette.map((token) => styles.getPropertyValue(token).trim());
+    return moireURL(artGenerator.url, art.pattern.params, colors);
+  }, [art, hasLink]);
 
   // O nome vem da constante, nunca da URL da página.
   const [beforeName, afterName] = t(content.art.by).split('{name}');
@@ -102,7 +112,7 @@ export function ArtModal({ art, open, onClose }: ArtModalProps) {
       {hasLink && (
         <a
           className="art-modal__visit"
-          href={`${artGenerator.url}?${artQuery(art)}`}
+          href={href}
           target="_blank"
           rel="noopener noreferrer"
         >

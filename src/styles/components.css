@@ -146,6 +146,22 @@
   opacity: 0.72;
 }
 
+/* Dica de que o desenho é clicável: três pulsos leves logo depois de a página abrir, e
+   para. Os keyframes só têm o meio, então o começo e o fim são a opacidade de cada
+   breakpoint. `scale` é separado do `transform`, que já segura o translateY. */
+@keyframes hero-art-hint {
+  50% {
+    opacity: 0.8;
+    scale: 1.02;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-art {
+    animation: hero-art-hint 2.4s ease-in-out 1.2s 3;
+  }
+}
+
 .hero-art__svg {
   width: 100%;
   height: auto;

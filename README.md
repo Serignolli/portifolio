@@ -68,15 +68,19 @@ cru nunca é renderizado na página.
 O projeto de origem sobe para a primeira posição **do próprio grupo** e ganha o selo
 "você veio daqui"; o banner aparece no topo da área de projetos.
 
-Hoje: o numixy.com deve apontar para `https://serignolli.com/?from=numixy`.
+Hoje: o numixy.com deve apontar para `https://serignolli.com/?from=numixy`, e o Moiré
+aponta para `https://serignolli.com/?from=moire`.
 
 ## O desenho do hero
 
-Troca todo dia. As formas ficam em `src/data/artPatterns.ts`:
+Troca todo dia, e é sempre um desenho do [Moiré](https://moire.serignolli.com/): uma
+forma girada várias vezes no mesmo centro. A geometria é a do gerador, portada em
+`src/data/moire.ts` (precisa continuar igual à de `moire/src/core/`), e os padrões ficam
+em `src/data/artPatterns.ts`:
 
-- **Dia comum:** família da curva, frequências e pétalas sorteadas de novo a cada dia, com
-  uma onda lenta do calendário só como viés das amplitudes. Dois dias seguidos são duas
-  peças diferentes. Sempre na paleta do site
+- **Dia comum:** forma, cópias, passo do giro e variações sorteados de novo a cada dia,
+  com uma onda lenta do calendário só como viés do ângulo do degradê. Dois dias seguidos
+  são duas peças diferentes. Sempre na paleta do site
 - **Data especial:** forma e cores do tema. São 14: Ano Novo, Carnaval, St. Patrick,
   Páscoa, Dia das Mães, Namorados (BR e EUA), festa junina, Dia dos Pais, Sete de
   Setembro, Dia das Crianças, Halloween, Thanksgiving e Natal. As móveis são calculadas,
@@ -84,8 +88,10 @@ Troca todo dia. As formas ficam em `src/data/artPatterns.ts`:
 - Adicionar uma data = um id em `FIXED`, um padrão em `THEMES` e o rótulo em
   `content.artDates`. Nenhum componente é tocado
 
-Clicar no desenho abre o modal que credita o gerador: fecha no × do canto, e o único
-botão do corpo leva pro gerador. Enquanto `artGenerator.url` (em `content.ts`) estiver
+Ao abrir a página o desenho pulsa três vezes, de leve, pra mostrar que é clicável (não
+pulsa com `prefers-reduced-motion`). Clicar abre o modal que credita o gerador: fecha no
+× do canto, e o único botão do corpo abre no Moiré o desenho do dia, com os mesmos
+parâmetros e as cores dos tokens resolvidas em hex. Enquanto `artGenerator.url` (em `content.ts`) estiver
 vazia, esse botão não aparece e volta sozinho quando a URL for preenchida.
 
 ## Currículo
