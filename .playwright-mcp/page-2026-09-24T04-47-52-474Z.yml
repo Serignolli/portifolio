@@ -1,0 +1,123 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "SFX Forge" [level=1] [ref=e7]
+    - navigation "Seções" [ref=e8]:
+      - link "Efeitos" [ref=e9] [cursor=pointer]:
+        - /url: "#/efeitos"
+      - link "Trilhas" [ref=e10] [cursor=pointer]:
+        - /url: "#/trilhas"
+    - paragraph [ref=e11]: Efeitos sonoros para o seu jogo. Escolha a intenção, ouça, exporte.
+    - group "Idioma" [ref=e12]:
+      - button "PT" [pressed] [ref=e13] [cursor=pointer]
+      - button "EN" [ref=e14] [cursor=pointer]
+  - generic [ref=e15]:
+    - main [ref=e16]:
+      - navigation "Efeitos" [ref=e17]:
+        - heading "Criar" [level=2] [ref=e18]
+        - list [ref=e19]:
+          - listitem [ref=e20]:
+            - button "Do zero" [ref=e21] [cursor=pointer]
+          - listitem [ref=e26]:
+            - button "Aleatório" [ref=e27] [cursor=pointer]
+        - generic [ref=e35]:
+          - heading "Movimento" [level=2] [ref=e36]
+          - list [ref=e37]:
+            - listitem [ref=e38]:
+              - button "Pulo" [ref=e39] [cursor=pointer]
+            - listitem [ref=e45]:
+              - button "Passo" [ref=e46] [cursor=pointer]
+            - listitem [ref=e52]:
+              - button "Mola" [ref=e53] [cursor=pointer]
+            - listitem [ref=e58]:
+              - button "Queda" [ref=e59] [cursor=pointer]
+        - generic [ref=e64]:
+          - heading "Combate" [level=2] [ref=e65]
+          - list [ref=e66]:
+            - listitem [ref=e67]:
+              - button "Laser" [ref=e68] [cursor=pointer]
+            - listitem [ref=e74]:
+              - button "Dano" [ref=e75] [cursor=pointer]
+            - listitem [ref=e80]:
+              - button "Explosão" [ref=e81] [cursor=pointer]
+        - generic [ref=e87]:
+          - heading "Itens e magia" [level=2] [ref=e88]
+          - list [ref=e89]:
+            - listitem [ref=e90]:
+              - button "Moeda" [pressed] [ref=e91] [cursor=pointer]
+            - listitem [ref=e97]:
+              - button "Power-up" [ref=e98] [cursor=pointer]
+            - listitem [ref=e103]:
+              - button "Magia" [ref=e104] [cursor=pointer]
+            - listitem [ref=e110]:
+              - button "Teleporte" [ref=e111] [cursor=pointer]
+            - listitem [ref=e117]:
+              - button "Bolha" [ref=e118] [cursor=pointer]
+        - generic [ref=e125]:
+          - heading "Interface e estados" [level=2] [ref=e126]
+          - list [ref=e127]:
+            - listitem [ref=e128]:
+              - button "Clique" [ref=e129] [cursor=pointer]
+            - listitem [ref=e134]:
+              - button "Confirmar" [ref=e135] [cursor=pointer]
+            - listitem [ref=e140]:
+              - button "Erro" [ref=e141] [cursor=pointer]
+            - listitem [ref=e147]:
+              - button "Alarme" [ref=e148] [cursor=pointer]
+            - listitem [ref=e154]:
+              - button "Game over" [ref=e155] [cursor=pointer]
+      - region "Som atual" [ref=e161]:
+        - generic [ref=e162]:
+          - generic [ref=e163]:
+            - generic [ref=e164]: Moeda
+            - generic [ref=e165]: pickup-1.wav
+            - generic [ref=e166]: não salvo
+          - generic [ref=e167]: 363 ms
+        - generic [ref=e170]:
+          - generic [ref=e171]:
+            - button "▶ Play" [ref=e172] [cursor=pointer]
+            - button "~ Variar" [ref=e173] [cursor=pointer]
+          - generic [ref=e174]:
+            - button "↓ WAV" [ref=e175] [cursor=pointer]
+            - button "+ Salvar" [ref=e176] [cursor=pointer]
+        - paragraph [ref=e177]: Espaço toca · V varia · 1–9 escolhem o efeito
+        - generic [ref=e178]:
+          - generic [ref=e179]:
+            - generic [ref=e180]: Usar no seu jogo
+            - button "Copiar" [ref=e181] [cursor=pointer]
+          - code [ref=e183]:
+            - text: const pickup = new Audio(
+            - generic [ref=e184]: "'/sounds/pickup-1.wav'"
+            - text: ); pickup.volume = 0.5; pickup.play();
+      - complementary "Parâmetros" [ref=e185]:
+        - button "Parâmetros Abra para moldar o som e entender cada controle" [ref=e186] [cursor=pointer]:
+          - generic [ref=e187]:
+            - generic [ref=e188]: Parâmetros
+            - generic [ref=e189]: Abra para moldar o som e entender cada controle
+          - generic [aria-hidden] [ref=e190]: ›
+        - generic [ref=e191]:
+          - generic [ref=e192]:
+            - term [ref=e193]: Onda
+            - definition [ref=e194]: Sine
+          - generic [ref=e195]:
+            - term [ref=e196]: Duração
+            - definition [ref=e197]: 363 ms
+          - generic [ref=e198]:
+            - term [ref=e199]: Frequência
+            - definition [ref=e200]: 750 Hz
+    - region "Bandeja de sons salvos" [ref=e201]:
+      - generic [ref=e202]:
+        - heading "Bandeja 0 sons" [level=2] [ref=e203]
+        - button "↓ Exportar tudo .zip" [disabled] [ref=e204]:
+          - text: ↓ Exportar tudo
+          - generic [ref=e205]: .zip
+      - paragraph [ref=e206]:
+        - text: Nada salvo ainda. Quando gostar de um som, use
+        - strong [ref=e207]: + Salvar
+        - text: para guardá-lo aqui.
+  - contentinfo [ref=e208]:
+    - text: Desenvolvido por
+    - link "Serignolli" [ref=e209] [cursor=pointer]:
+      - /url: https://serignolli.com/?from=sfx-forge
+    - text: ·
+    - link "Apoie o projeto" [ref=e210] [cursor=pointer]:
+      - /url: https://buymeacoffee.com/gabrielserignolli

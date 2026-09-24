@@ -135,7 +135,7 @@ contabilidade por um sistema web multiusuário."
 
 Estado atual do array:
 
-- `sfx-forge` → `tool` (ainda `status: 'soon'`, sem URL)
+- `sfx-forge` → `tool` (`https://sfx-forge.serignolli.com/`)
 - `numixy` → `lab` (nome exibido "Numixy", id `numixy`)
 
 Deixados como exemplos comentados no array, para preencher depois: `rewallet` (`tool`,
@@ -775,7 +775,7 @@ pelo OG.
 - [x] E-mail de contato: `serignolli.software@hotmail.com`
 - [x] URL do LinkedIn: `https://www.linkedin.com/in/gabriel-moreno-serignolli/`
 - [x] URL do Numixy: `https://numixy.com` (nome exibido e `id`: `numixy`)
-- [x] URL do SFX Forge: não existe ainda, entra como `status: 'soon'`, sem link
+- [x] URL do SFX Forge: `https://sfx-forge.serignolli.com/`
 - [x] Apoio: **não entra nesta página**, fica dentro de cada projeto. O link do Buy Me a
       Coffee (`https://buymeacoffee.com/gabrielserignolli`) segue valendo lá, não aqui
 

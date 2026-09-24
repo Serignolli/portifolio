@@ -49,8 +49,7 @@ export const projects: Project[] = [
     id: 'sfx-forge',
     name: 'SFX Forge',
     category: 'tool',
-    // Sem URL ainda, fica como 'soon' até o site existir.
-    status: 'soon',
+    url: 'https://sfx-forge.serignolli.com/',
     featured: true,
     tags: ['Web Audio'],
     shot: '/shots/sfx-forge.webp',
@@ -59,8 +58,8 @@ export const projects: Project[] = [
       en: 'A web synthesizer to create and export sound effects.',
     },
     alt: {
-      pt: 'Painel do SFX Forge com controles de síntese e forma de onda.',
-      en: 'SFX Forge panel with synthesis controls and a waveform.',
+      pt: 'SFX Forge com a forma de onda de um som de moeda e a lista de efeitos por categoria.',
+      en: 'SFX Forge showing the waveform of a coin sound and the list of effects by category.',
     },
   },
   {

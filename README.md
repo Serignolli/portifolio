@@ -118,7 +118,6 @@ Inter variável self-hosted em `public/fonts/inter-variable.woff2`, extraída de
 
 ## Arquivos que ainda são placeholder
 
-- `public/shots/sfx-forge.webp`
 - `public/og.png`
 
 Gerados com ffmpeg nas dimensões corretas. Substituir pelos arquivos reais mantendo
