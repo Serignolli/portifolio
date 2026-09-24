@@ -206,8 +206,7 @@ export const projects: Project[] = [
     id: 'karaoke',
     name: 'Catálogo de Karaokê',
     category: 'lab',
-    // Sem URL ainda, fica como 'soon' até o site existir.
-    status: 'soon',
+    url: 'https://catalogo-karaoke.serignolli.com/',
     tags: [],
     shot: '/shots/karaoke.webp',
     description: {
