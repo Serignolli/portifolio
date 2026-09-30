@@ -80,6 +80,22 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 'moire-3d',
+    name: 'Moiré 3D',
+    category: 'tool',
+    url: 'https://moire-3d.serignolli.com/',
+    tags: ['React', 'TypeScript', 'Three.js'],
+    shot: '/shots/moire-3d.webp',
+    description: {
+      pt: 'O Moiré com volume, luz e câmera. Exporta imagem, vídeo em loop, GIF e modelo 3D.',
+      en: 'Moiré with volume, light and a camera. Exports image, looping video, GIF and 3D model.',
+    },
+    alt: {
+      pt: 'Moiré 3D com nove anéis dourados de metal cruzados no espaço, ao lado dos controles.',
+      en: 'Moiré 3D with nine golden metal rings crossing in space, next to the controls.',
+    },
+  },
+  {
     id: 'portwatch',
     name: 'Port Watch',
     category: 'tool',
