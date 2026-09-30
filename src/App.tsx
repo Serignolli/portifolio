@@ -33,18 +33,25 @@ function readFromProject(): Project | null {
   return projects.find((project) => project.id === raw) ?? null;
 }
 
+/** Quantos projetos cada categoria mostra na principal. */
+const HOME_LIMIT = 3;
+
 /**
- * A principal mostra só os exemplos (`featured`) de cada categoria; o resto fica no
- * catálogo. O projeto de origem do `?from=` entra sempre, na primeira posição do
- * próprio grupo, mesmo que não seja um dos exemplos.
+ * A principal mostra até três projetos de cada categoria, os mais importantes: primeiro
+ * os `featured`, depois os demais na ordem de `projects.ts`. O resto fica no catálogo.
+ * O projeto de origem do `?from=` entra sempre, na primeira posição do próprio grupo.
  */
 function groupProjects(from: Project | null): Record<Category, Project[]> {
   const groups = {} as Record<Category, Project[]>;
   for (const category of HOME_ORDER) {
-    const list = projects.filter(
-      (project) => project.category === category && project.featured && project.id !== from?.id,
+    const all = projects.filter(
+      (project) => project.category === category && project.id !== from?.id,
     );
-    groups[category] = from?.category === category ? [from, ...list] : list;
+    const list = [
+      ...all.filter((project) => project.featured),
+      ...all.filter((project) => !project.featured),
+    ];
+    groups[category] = (from?.category === category ? [from, ...list] : list).slice(0, HOME_LIMIT);
   }
   return groups;
 }

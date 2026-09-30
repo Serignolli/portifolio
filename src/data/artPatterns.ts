@@ -63,6 +63,14 @@ function hash(text: string): number {
     h ^= text.charCodeAt(i);
     h = Math.imul(h, 16777619);
   }
+  // Datas vizinhas só diferem no último caractere e saem do laço com sementes parecidas,
+  // o que fazia dias próximos sortearem quase os mesmos números. Esse embaralhamento
+  // final (o fmix32 do MurmurHash3) espalha a diferença por todos os bits.
+  h ^= h >>> 16;
+  h = Math.imul(h, 0x85ebca6b);
+  h ^= h >>> 13;
+  h = Math.imul(h, 0xc2b2ae35);
+  h ^= h >>> 16;
   return h >>> 0;
 }
 
@@ -77,24 +85,25 @@ function random(seed: number): () => number {
   };
 }
 
-/** Formas do sorteio, com peso. O círculo fica de fora: girado no próprio centro ele
- *  não muda, e as cópias cairiam todas umas sobre as outras. */
-const DAILY_SHAPES = [
-  'ellipse',
-  'ellipse',
-  'ellipse',
-  'rect',
-  'polygon',
-  'star',
-  'line',
-] as const;
+/**
+ * As famílias de desenho de um dia comum, na ordem em que se revezam. A família NÃO é
+ * sorteada: sai do número do dia, uma depois da outra. Sorteada, ela repetia: dois dias
+ * seguidos caíam em elipses com quase o mesmo número de cópias e o mesmo passo, e a
+ * página parecia não ter trocado. Em fila, dois dias seguidos nunca têm a mesma cara.
+ *
+ * A elipse aparece duas vezes, longe uma da outra, porque são dois desenhos bem
+ * diferentes: a malha que fecha certinho em 180° e a de passo solto, torcida. O círculo
+ * fica de fora: girado no próprio centro ele não muda, e as cópias cairiam todas umas
+ * sobre as outras.
+ */
+const DAILY_FAMILIES = ['ellipse-closed', 'star', 'rect', 'ellipse-loose', 'polygon', 'line'] as const;
 
 /**
  * O padrão de um dia comum.
  *
- * Forma, número de cópias, passo do giro e as variações de escala e opacidade são
- * sorteados de novo toda manhã. Quem abre a página dois dias seguidos vê duas peças
- * diferentes, não a mesma respirando.
+ * A família da forma vem da fila de `DAILY_FAMILIES`; o número de cópias, o passo do
+ * giro e as variações de escala e opacidade são sorteados de novo toda manhã. Quem abre
+ * a página dois dias seguidos vê duas peças diferentes, não a mesma respirando.
  *
  * Por baixo corre uma onda lenta sobre o número do dia, só como viés do ângulo do
  * degradê: dá uma maré à sequência ao longo das semanas sem prender o desenho ao de
@@ -105,13 +114,12 @@ const DAILY_SHAPES = [
  */
 function dailyPattern(seed: string, day: number): ArtPattern {
   const rnd = random(hash(seed));
-  const pick = <T,>(list: readonly T[]): T => list[Math.floor(rnd() * list.length)];
   /** Inteiro entre `min` e `max`, os dois inclusos. */
   const int = (min: number, max: number) => min + Math.floor(rnd() * (max - min + 1));
   /** Decimal entre `min` e `max`, com duas casas: o link sai legível. */
   const num = (min: number, max: number) => +(min + rnd() * (max - min)).toFixed(2);
 
-  const shape = pick(DAILY_SHAPES);
+  const family = DAILY_FAMILIES[day % DAILY_FAMILIES.length];
   // Variações que servem pra qualquer forma: uma cópia a cada tantas encolhe, e a
   // opacidade ondula ao longo das cópias. Cada uma aparece em mais ou menos metade dos
   // dias, pra nem todo desenho ter os mesmos enfeites.
@@ -125,21 +133,23 @@ function dailyPattern(seed: string, day: number): ArtPattern {
   };
 
   let params: Partial<MoireParams>;
-  if (shape === 'ellipse') {
+  if (family === 'ellipse-closed') {
+    // Fecha certinho em 180°: a malha regular, de flor.
     const n = int(12, 28);
-    // Metade das vezes fecha certinho em 180°; na outra, um passo solto que torce a
-    // malha e deixa ela orgânica.
-    params = { shape, w: 250, h: int(60, 130), n, step: rnd() < 0.5 ? +(180 / n).toFixed(2) : num(5, 14) };
-  } else if (shape === 'rect') {
+    params = { shape: 'ellipse', w: 250, h: int(60, 130), n, step: +(180 / n).toFixed(2) };
+  } else if (family === 'ellipse-loose') {
+    // Passo solto, que torce a malha e deixa ela orgânica.
+    params = { shape: 'ellipse', w: 250, h: int(60, 130), n: int(12, 28), step: num(5, 14) };
+  } else if (family === 'rect') {
     const square = rnd() < 0.6;
-    params = { shape, w: square ? 210 : 240, h: square ? 210 : int(130, 170), radius: int(8, 40), n: int(16, 28), step: num(3, 8) };
-  } else if (shape === 'polygon') {
-    params = { shape, w: 250, h: 250, sides: int(3, 8), n: int(14, 24), step: num(2, 6) };
-  } else if (shape === 'star') {
-    params = { shape, w: 250, h: 250, sides: int(5, 8), inner: num(0.35, 0.55), n: int(12, 20), step: num(2, 6) };
+    params = { shape: 'rect', w: square ? 210 : 240, h: square ? 210 : int(130, 170), radius: int(8, 40), n: int(16, 28), step: num(3, 8) };
+  } else if (family === 'polygon') {
+    params = { shape: 'polygon', w: 250, h: 250, sides: int(3, 8), n: int(14, 24), step: num(2, 6) };
+  } else if (family === 'star') {
+    params = { shape: 'star', w: 250, h: 250, sides: int(5, 8), inner: num(0.35, 0.55), n: int(12, 20), step: num(2, 6) };
   } else {
     // Leque: linhas abrindo só até um pedaço da volta.
-    params = { shape, w: 300, n: int(25, 45), step: num(2, 4) };
+    params = { shape: 'line', w: 300, n: int(25, 45), step: num(2, 4) };
   }
 
   return { id: 'daily', params: moire({ ...common, ...params }), palette: SITE };

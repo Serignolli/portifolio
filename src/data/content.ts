@@ -32,7 +32,7 @@ export const curriculum = {
 };
 
 /**
- * Título e texto de cada grupo na página principal. Grupo sem projeto em destaque
+ * Título e texto de cada grupo na página principal. Grupo sem projeto
  * não renderiza nada.
  */
 export const groupContent: Record<
@@ -47,7 +47,7 @@ export const groupContent: Record<
     },
   },
   lab: {
-    heading: { pt: 'Jogos e brincadeiras', en: 'Games & fun stuff' },
+    heading: { pt: 'Jogos, brincadeiras e outros', en: 'Games, fun stuff & more' },
     subtitle: {
       pt: 'Nem tudo precisa ser sério. Pra divertir também faço jogos, brincadeiras e uns experimentos. Alguns exemplos:',
       en: 'Not everything has to be serious. For fun I also make games, toys and a few experiments. Some examples:',
@@ -62,7 +62,7 @@ export const groupContent: Record<
 export const categoryLabel: Record<Category, Localized> = {
   tool: { pt: 'Ferramentas', en: 'Tools' },
   client: { pt: 'Feitos para clientes', en: 'Built for clients' },
-  lab: { pt: 'Jogos e brincadeiras', en: 'Games & fun stuff' },
+  lab: { pt: 'Jogos, brincadeiras e outros', en: 'Games, fun stuff & more' },
 };
 
 /** Caminho do catálogo com todos os projetos publicados. */
@@ -106,6 +106,8 @@ export const content = {
       pt: 'Você chegou pelo {name}, obrigado por usar. Estes são os outros projetos:',
       en: 'You came from {name}, thanks for using it. Here are the other projects:',
     },
+    /** Fim da fila de cada categoria na principal: leva à faixa dela no catálogo. */
+    more: { pt: 'Ver mais', en: 'See more' },
   },
 
   art: {

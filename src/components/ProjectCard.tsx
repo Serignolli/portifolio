@@ -44,10 +44,8 @@ export function ProjectCard({ project, priority, isFrom, nameLevel }: ProjectCar
     </div>
   );
 
-  // A categoria escolhe o formato do card: tool grande, lab compacto, client horizontal.
   const className = [
     'card',
-    `card--${project.category}`,
     isFrom ? 'card--from' : '',
     isSoon ? 'card--soon' : '',
   ]

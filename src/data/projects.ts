@@ -26,7 +26,7 @@ export type Project = {
   shot: string;
   /** 'soon' = ainda sem endereço: card sem link, com o selo "em breve". */
   status?: 'live' | 'soon';
-  /** Aparece como exemplo na página principal. O catálogo mostra todos. */
+  /** Entra primeiro na fila da página principal. O catálogo mostra todos. */
   featured?: boolean;
   /** Tecnologias, viram as etiquetas do card. */
   tags: string[];
@@ -182,7 +182,7 @@ export const projects: Project[] = [
     },
   },
 
-  // ---------- Jogos e brincadeiras ----------
+  // ---------- Jogos, brincadeiras e outros ----------
   {
     id: 'numixy',
     name: 'Numixy',

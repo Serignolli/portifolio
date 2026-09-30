@@ -359,30 +359,57 @@ main {
   font-weight: 650;
 }
 
-.grid {
-  display: grid;
-  gap: var(--space-3);
-  margin-top: var(--space-1);
-}
-
-.grid--tool {
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-}
-
 /*
- * O laboratório é compacto de propósito, mas não apagado. O teto de 300px na coluna
- * garante que um card de lab continue menor que um de tool mesmo quando é o único
- * do grupo (com 1fr ele esticaria pra linha inteira e ficariam do mesmo tamanho).
+ * Todas as categorias usam a mesma fila na principal: até três cards do mesmo tamanho
+ * e, no fim, o "ver mais" que leva à faixa da categoria no catálogo. No desktop cabe
+ * tudo numa linha; no celular a fila rola com o dedo e o card seguinte aparece cortado.
  */
-.grid--lab {
-  grid-template-columns: repeat(auto-fill, minmax(240px, 300px));
-  justify-content: start;
+.grid {
+  --more-w: 6.5rem;
+  display: flex;
   gap: var(--space-2);
+  /* overflow-x: auto também corta na vertical: a folga deixa o card subir no hover
+     sem perder a borda e a sombra, e a margem negativa devolve o espaço. */
+  margin: 0 calc(-1 * var(--space-1));
+  padding: var(--space-1) var(--space-1) var(--space-2);
+  scroll-padding-inline: var(--space-1);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
 
-.grid--client {
-  grid-template-columns: 1fr;
-  gap: var(--space-2);
+.grid > * {
+  flex: 0 0 min(78%, 300px);
+  scroll-snap-align: start;
+}
+
+.grid > .more-card {
+  flex-basis: var(--more-w);
+}
+
+/* O fim da fila: avisa que a categoria tem mais projetos do que os três da principal. */
+.more-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--accent-text);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.more-card:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .card {
@@ -443,27 +470,22 @@ a.card:hover {
   color: var(--text-muted);
 }
 
-/* Cards do laboratório: menores e mais leves, mesma proporção de imagem. */
-.card--lab {
+/* Cards da principal: compactos e leves, iguais em toda categoria. */
+.grid .card {
   background: var(--bg-2);
 }
 
-.card--lab .card__body {
+.grid .card .card__body {
   padding: var(--space-2);
   gap: 0.25rem;
 }
 
-.card--lab .card__name {
+.grid .card .card__name {
   font-size: 1rem;
 }
 
-.card--lab .card__description {
+.grid .card .card__description {
   font-size: 0.875rem;
-}
-
-/* Cards de encomenda: empilhados no mobile, horizontais no desktop. */
-.card--client {
-  background: var(--bg-2);
 }
 
 .badge {
@@ -901,20 +923,8 @@ a.card:hover {
     font-size: clamp(3.2rem, 7vw, 4.6rem);
   }
 
-  .card--client {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    align-items: stretch;
-  }
-
-  .card--client .card__shot {
-    height: 100%;
-    border-bottom: none;
-    border-right: 1px solid var(--border);
-  }
-
-  .card--client .card__body {
-    justify-content: center;
+  .grid > * {
+    flex-basis: calc((100% - 3 * var(--space-2) - var(--more-w)) / 3);
   }
 
   .catalog-row__arrows {

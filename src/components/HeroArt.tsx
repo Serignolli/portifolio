@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { content } from '../data/content';
-import { artFor, type ArtPattern } from '../data/artPatterns';
+import { artFor, seedFor, type ArtPattern } from '../data/artPatterns';
 import {
   bounds,
   f,
@@ -28,8 +28,17 @@ export function HeroArt() {
   const t = useT();
   const [open, setOpen] = useState(false);
 
-  // Uma vez por montagem: o padrão é do dia e não muda enquanto a aba está aberta.
-  const today = useMemo(() => artFor(new Date()), []);
+  const [today, setToday] = useState(() => artFor(new Date()));
+  // Aba que ficou aberta de um dia pro outro: ao voltar pra ela, o desenho é o de hoje.
+  useEffect(() => {
+    function refresh() {
+      if (document.visibilityState !== 'visible') return;
+      const now = new Date();
+      setToday((prev) => (prev.seed === seedFor(now) ? prev : artFor(now)));
+    }
+    document.addEventListener('visibilitychange', refresh);
+    return () => document.removeEventListener('visibilitychange', refresh);
+  }, []);
   // Identidade estável: o modal usa isso como ouvinte de evento do DOM.
   const close = useCallback(() => setOpen(false), []);
 

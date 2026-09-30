@@ -33,11 +33,13 @@ As categorias decidem a seção e a faixa, e mudar a `category` move o projeto s
 |---|---|---|
 | `tool` | Ferramentas | Ferramentas |
 | `client` | Exemplos, dentro de "Trabalho sob encomenda" | Feitos para clientes |
-| `lab` | Jogos e brincadeiras | Jogos e brincadeiras |
+| `lab` | Jogos, brincadeiras e outros | Jogos, brincadeiras e outros |
 
-**Na principal só entram os projetos com `featured: true`** (a ideia é dois por
-categoria); o catálogo mostra todos. Grupo sem nenhum projeto em destaque não renderiza
-nada. Em `client`, a `description` descreve o problema resolvido, não a ferramenta.
+**Na principal cada categoria mostra até três projetos**, numa fila horizontal de cards
+do mesmo tamanho: primeiro os `featured: true`, depois os demais na ordem do array. Se a
+categoria tem mais do que coube, a fila termina num "Ver mais" que leva à faixa dela no
+catálogo, que mostra todos. Grupo sem projeto não renderiza nada. Em `client`, a
+`description` descreve o problema resolvido, não a ferramenta.
 
 Links: `url` é o site, `repo` o repositório público. O card abre o site, ou o
 repositório quando não houver site (ex.: app desktop); com os dois, o catálogo mostra
@@ -78,9 +80,10 @@ forma girada várias vezes no mesmo centro. A geometria é a do gerador, portada
 `src/data/moire.ts` (precisa continuar igual à de `moire/src/core/`), e os padrões ficam
 em `src/data/artPatterns.ts`:
 
-- **Dia comum:** forma, cópias, passo do giro e variações sorteados de novo a cada dia,
-  com uma onda lenta do calendário só como viés do ângulo do degradê. Dois dias seguidos
-  são duas peças diferentes. Sempre na paleta do site
+- **Dia comum:** a família da forma (elipse fechada, estrela, retângulo, elipse solta,
+  polígono, leque) segue uma fila pelo número do dia, então dois dias seguidos nunca têm
+  a mesma cara; cópias, passo do giro e variações são sorteados de novo a cada dia, com
+  uma onda lenta do calendário só como viés do ângulo do degradê. Sempre na paleta do site
 - **Data especial:** forma e cores do tema. São 14: Ano Novo, Carnaval, St. Patrick,
   Páscoa, Dia das Mães, Namorados (BR e EUA), festa junina, Dia dos Pais, Sete de
   Setembro, Dia das Crianças, Halloween, Thanksgiving e Natal. As móveis são calculadas,
