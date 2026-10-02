@@ -148,6 +148,23 @@ export const projects: Project[] = [
 
   // ---------- Para clientes ----------
   {
+    id: 'boro',
+    name: 'Boró',
+    category: 'client',
+    url: 'https://borodesign.com.br/',
+    featured: true,
+    tags: ['HTML', 'CSS'],
+    shot: '/shots/boro.webp',
+    description: {
+      pt: 'Deu à Boró, marca e agência de design, sua presença na web, com portfólio e contato direto.',
+      en: 'Gave Boró, a design brand and agency, its home on the web, with portfolio and direct contact.',
+    },
+    alt: {
+      pt: 'Página da Boró com o logo escrito à mão e o aviso de que o espaço digital está quase pronto.',
+      en: 'Boró page with its handwritten logo and a note that its digital space is almost ready.',
+    },
+  },
+  {
     id: 'hand-solve',
     name: 'Hand Solv',
     category: 'client',
