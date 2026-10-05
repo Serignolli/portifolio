@@ -46,6 +46,23 @@ export function projectHref(project: Project): string | undefined {
 export const projects: Project[] = [
   // ---------- Ferramentas ----------
   {
+    id: 'exercitario',
+    name: 'Exercitário',
+    category: 'tool',
+    url: 'https://exercitario.serignolli.com/',
+    featured: true,
+    tags: ['Astro', 'React', 'TypeScript'],
+    shot: '/shots/exercitario.webp',
+    description: {
+      pt: 'Dicionário de exercícios por porção muscular, com variações, execução e estudos citados.',
+      en: 'An exercise dictionary by muscle portion, with variations, form and cited studies.',
+    },
+    alt: {
+      pt: 'Página do supino reto no Exercitário, com fotos da execução, foco principal e mapa dos músculos.',
+      en: 'Bench press page on Exercitário, with form photos, main focus and a map of the muscles worked.',
+    },
+  },
+  {
     id: 'sfx-forge',
     name: 'SFX Forge',
     category: 'tool',
