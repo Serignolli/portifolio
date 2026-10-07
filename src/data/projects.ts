@@ -218,6 +218,23 @@ export const projects: Project[] = [
 
   // ---------- Jogos, brincadeiras e outros ----------
   {
+    id: 'jogo-binario',
+    name: 'Jogo Binário',
+    category: 'lab',
+    url: 'https://jogo-binario.serignolli.com/',
+    featured: true,
+    tags: ['JavaScript', 'SFX Forge'],
+    shot: '/shots/jogo-binario.webp',
+    description: {
+      pt: 'Jogo de conversão entre binário e decimal em 8 bits, feito para usar em sala de aula.',
+      en: 'An 8-bit binary to decimal conversion game, made for use in the classroom.',
+    },
+    alt: {
+      pt: 'Partida do Jogo Binário com linhas de 8 bits e o valor decimal de cada uma.',
+      en: 'Binary Game match with rows of 8 bits and the decimal value of each one.',
+    },
+  },
+  {
     id: 'numixy',
     name: 'Numixy',
     category: 'lab',
