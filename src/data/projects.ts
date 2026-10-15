@@ -113,6 +113,22 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 'respiro',
+    name: 'Respiro',
+    category: 'tool',
+    url: 'https://respiro.serignolli.com/',
+    tags: ['Kotlin', 'Android'],
+    shot: '/shots/respiro.webp',
+    description: {
+      pt: 'App Android que põe uma pausa antes de Reels, Shorts e TikTok e limita o tempo no feed.',
+      en: 'An Android app that adds a pause before Reels, Shorts and TikTok and caps your feed time.',
+    },
+    alt: {
+      pt: 'Página do Respiro com um celular no Reels, o aviso de pausa de 5 s e o contador de 4 de 10 min.',
+      en: 'Respiro page with a phone on Reels, a 5 s pause badge and a 4 of 10 min counter.',
+    },
+  },
+  {
     id: 'portwatch',
     name: 'Port Watch',
     category: 'tool',
@@ -126,40 +142,6 @@ export const projects: Project[] = [
     alt: {
       pt: 'Tabela do Port Watch listando portas, protocolos, estados e processos.',
       en: 'Port Watch table listing ports, protocols, states and processes.',
-    },
-  },
-  {
-    id: 'ai-code-reviewer',
-    name: 'AI Code Reviewer',
-    category: 'tool',
-    url: 'https://ai-code-reviewer-and-explainer.onrender.com/',
-    repo: 'https://github.com/Serignolli/Gradio_OpenRouter',
-    tags: ['Python', 'Gradio', 'OpenRouter'],
-    shot: '/shots/ai-code-reviewer.webp',
-    description: {
-      pt: 'Cole um trecho de código e receba explicação, revisão e sugestões de melhoria por IA.',
-      en: 'Paste a code snippet and get an AI explanation, review and improvement ideas.',
-    },
-    alt: {
-      pt: 'Tela do AI Code Reviewer com o editor de código e o painel de análise.',
-      en: 'AI Code Reviewer screen with the code editor and the analysis panel.',
-    },
-  },
-  {
-    id: 'pedal-calculator',
-    name: 'Calculadora do Pedal',
-    category: 'tool',
-    url: 'https://bike-calculator-pied.vercel.app/',
-    repo: 'https://github.com/Serignolli/bike_calculator',
-    tags: ['React', 'TypeScript', 'Tailwind'],
-    shot: '/shots/pedal-calculator.webp',
-    description: {
-      pt: 'Quanto você ganha trocando carro, moto ou ônibus pela bike: no bolso, no tempo e no clima.',
-      en: 'How much you gain by swapping car, motorcycle or bus for a bicycle: in money, time and climate.',
-    },
-    alt: {
-      pt: 'Calculadora do Pedal com os dados do trajeto e a economia por mês, CO₂ evitado e tempo.',
-      en: 'Pedal Calculator with route inputs and the monthly savings, CO₂ avoided and time.',
     },
   },
 
@@ -218,23 +200,6 @@ export const projects: Project[] = [
 
   // ---------- Jogos, brincadeiras e outros ----------
   {
-    id: 'jogo-binario',
-    name: 'Jogo Binário',
-    category: 'lab',
-    url: 'https://jogo-binario.serignolli.com/',
-    featured: true,
-    tags: ['JavaScript', 'SFX Forge'],
-    shot: '/shots/jogo-binario.webp',
-    description: {
-      pt: 'Jogo de conversão entre binário e decimal em 8 bits, feito para usar em sala de aula.',
-      en: 'An 8-bit binary to decimal conversion game, made for use in the classroom.',
-    },
-    alt: {
-      pt: 'Partida do Jogo Binário com linhas de 8 bits e o valor decimal de cada uma.',
-      en: 'Binary Game match with rows of 8 bits and the decimal value of each one.',
-    },
-  },
-  {
     id: 'numixy',
     name: 'Numixy',
     category: 'lab',
@@ -249,6 +214,23 @@ export const projects: Project[] = [
     alt: {
       pt: 'Tela do Numixy com o número alvo do dia e a calculadora do desafio.',
       en: "Numixy screen with the day's target number and the challenge calculator.",
+    },
+  },
+  {
+    id: 'jogo-binario',
+    name: 'Jogo Binário',
+    category: 'lab',
+    url: 'https://jogo-binario.serignolli.com/',
+    featured: true,
+    tags: ['JavaScript', 'SFX Forge'],
+    shot: '/shots/jogo-binario.webp',
+    description: {
+      pt: 'Jogo de conversão entre binário e decimal em 8 bits, feito para usar em sala de aula.',
+      en: 'An 8-bit binary to decimal conversion game, made for use in the classroom.',
+    },
+    alt: {
+      pt: 'Partida do Jogo Binário com linhas de 8 bits e o valor decimal de cada uma.',
+      en: 'Binary Game match with rows of 8 bits and the decimal value of each one.',
     },
   },
   {
@@ -270,6 +252,22 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 'subrede',
+    name: 'Sub-rede',
+    category: 'lab',
+    url: 'https://subrede.serignolli.com/',
+    tags: ['JavaScript'],
+    shot: '/shots/subrede.webp',
+    description: {
+      pt: 'Simulador de máscara de sub-rede em decimal, binário e CIDR, usado em sala de aula.',
+      en: 'A subnet mask simulator in decimal, binary and CIDR, used in the classroom.',
+    },
+    alt: {
+      pt: 'Simulador com a máscara 255.255.240.0 em decimal, binário e /20, com hosts, redes e endereços.',
+      en: 'Simulator showing mask 255.255.240.0 in decimal, binary and /20, with hosts, networks and addresses.',
+    },
+  },
+  {
     id: 'karaoke',
     name: 'Catálogo de Karaokê',
     category: 'lab',
@@ -283,6 +281,23 @@ export const projects: Project[] = [
     alt: {
       pt: 'Catálogo de Karaokê sugerindo cinco músicas sorteadas, com código e trecho da letra.',
       en: 'Karaoke catalog suggesting five shuffled songs, with code and a lyric snippet.',
+    },
+  },
+  {
+    id: 'pedal-calculator',
+    name: 'Calculadora do Pedal',
+    category: 'lab',
+    url: 'https://bike-calculator-pied.vercel.app/',
+    repo: 'https://github.com/Serignolli/bike_calculator',
+    tags: ['React', 'TypeScript', 'Tailwind'],
+    shot: '/shots/pedal-calculator.webp',
+    description: {
+      pt: 'Quanto você ganha trocando carro, moto ou ônibus pela bike: no bolso, no tempo e no clima.',
+      en: 'How much you gain by swapping car, motorcycle or bus for a bicycle: in money, time and climate.',
+    },
+    alt: {
+      pt: 'Calculadora do Pedal com os dados do trajeto e a economia por mês, CO₂ evitado e tempo.',
+      en: 'Pedal Calculator with route inputs and the monthly savings, CO₂ avoided and time.',
     },
   },
 ];
