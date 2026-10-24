@@ -300,4 +300,21 @@ export const projects: Project[] = [
       en: 'Pedal Calculator with route inputs and the monthly savings, CO₂ avoided and time.',
     },
   },
+  {
+    id: 'cinturao',
+    name: 'Cinturão',
+    category: 'lab',
+    url: 'https://cinturao.serignolli.com/',
+    repo: 'https://github.com/Serignolli/cinturao',
+    tags: ['Three.js', 'WebGL', 'GLSL'],
+    shot: '/shots/cinturao.webp',
+    description: {
+      pt: 'Estudo de animação 3D: a página vira um cinturão de pedras com física para arremessar e explodir.',
+      en: 'A 3D animation study: the page turns into an asteroid belt with physics to throw and blow up.',
+    },
+    alt: {
+      pt: 'As palavras da página se soltando e girando entre pedras em órbita, durante a descida do Cinturão.',
+      en: 'The words of the page breaking loose and spinning among orbiting rocks during the Cinturão descent.',
+    },
+  },
 ];
