@@ -28,6 +28,8 @@ const HOME_ORDER: Category[] = ['tool', 'client', 'lab'];
  * por completo, o valor cru nunca chega a ser renderizado.
  */
 function readFromProject(): Project | null {
+  // Na pré-renderização do build não há URL: sai a principal sem projeto de origem.
+  if (typeof window === 'undefined') return null;
   const raw = new URLSearchParams(window.location.search).get('from');
   if (!raw) return null;
   return projects.find((project) => project.id === raw) ?? null;

@@ -132,6 +132,7 @@ export const projects: Project[] = [
     id: 'portwatch',
     name: 'Port Watch',
     category: 'tool',
+    url: 'https://port-watch.serignolli.com/',
     repo: 'https://github.com/Serignolli/port-watch',
     tags: ['Go', 'HTML'],
     shot: '/shots/portwatch.webp',

@@ -41,7 +41,8 @@ export function ArtModal({ art, open, onClose }: ArtModalProps) {
   // O Moiré não conhece os tokens do site: as cores vão resolvidas em hex, lidas do
   // tokens.css já aplicado. Assim a paleta continua morando só lá.
   const href = useMemo(() => {
-    if (!hasLink) return '';
+    // Sem document na pré-renderização do build; o navegador calcula o link ao renderizar.
+    if (!hasLink || typeof document === 'undefined') return '';
     const styles = getComputedStyle(document.documentElement);
     const colors = art.pattern.palette.map((token) => styles.getPropertyValue(token).trim());
     return moireURL(artGenerator.url, art.pattern.params, colors);

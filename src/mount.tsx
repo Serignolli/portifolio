@@ -1,5 +1,6 @@
 import { StrictMode, type ComponentType } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Analytics } from '@vercel/analytics/react';
 import { LanguageProvider } from './i18n/LanguageContext';
 import './styles/tokens.css';
 import './styles/global.css';
@@ -15,6 +16,7 @@ export function mount(Page: ComponentType) {
       <LanguageProvider>
         <Page />
       </LanguageProvider>
+      <Analytics />
     </StrictMode>,
   );
 }
