@@ -145,6 +145,23 @@ export const projects: Project[] = [
       en: 'Port Watch table listing ports, protocols, states and processes.',
     },
   },
+  {
+    id: 'overlook',
+    name: 'Overlook',
+    category: 'tool',
+    url: 'https://overlook.serignolli.com/',
+    repo: 'https://github.com/Serignolli/overlook',
+    tags: ['Java', 'Vercel CLI'],
+    shot: '/shots/overlook.webp',
+    description: {
+      pt: 'Painel local com o Web Analytics de todos os seus projetos da Vercel, via Vercel CLI.',
+      en: 'A local dashboard with Web Analytics for all your Vercel projects, via the Vercel CLI.',
+    },
+    alt: {
+      pt: 'Overlook com page views, eventos e visitantes somados e um gráfico de page views por projeto.',
+      en: 'Overlook with total page views, events and visitors and a chart of page views per project.',
+    },
+  },
 
   // ---------- Para clientes ----------
   {
@@ -232,6 +249,42 @@ export const projects: Project[] = [
     alt: {
       pt: 'Partida do Jogo Binário com linhas de 8 bits e o valor decimal de cada uma.',
       en: 'Binary Game match with rows of 8 bits and the decimal value of each one.',
+    },
+  },
+  {
+    id: 'cmd-crew',
+    name: 'CmdCrew',
+    category: 'lab',
+    url: 'https://cmdcrew.serignolli.com/',
+    repo: 'https://github.com/Serignolli/cmdcrew',
+    featured: true,
+    tags: ['C#', 'Go', 'SFX Forge'],
+    shot: '/shots/cmd-crew.webp',
+    description: {
+      pt: 'Bichinhos em pixel art que trabalham com o Claude Code e avisam quando ele termina.',
+      en: 'Pixel art critters that work alongside Claude Code and tell you when it is done.',
+    },
+    alt: {
+      pt: 'Salas do CmdCrew com o agente trabalhando, pedindo permissão com Permitir, Negar e Terminal, e o letreiro PRONTO!.',
+      en: 'CmdCrew rooms with the agent working, asking permission with Allow, Deny and Terminal, and the DONE! sign.',
+    },
+  },
+  {
+    id: 'screen-pets',
+    name: 'Screen Pets',
+    category: 'lab',
+    url: 'https://screenpets.serignolli.com/',
+    repo: 'https://github.com/Serignolli/screen-pets',
+    featured: true,
+    tags: ['C#', 'Go'],
+    shot: '/shots/screen-pets.webp',
+    description: {
+      pt: 'Bichinhos em pixel art que passeiam pelas bordas da tela e deixam o computador mais divertido.',
+      en: 'Pixel art pets that roam the edges of your screen to make your computer more fun.',
+    },
+    alt: {
+      pt: 'Cards do Screen Pets com gato, cachorro, pinguim e formiga em pixel art e as cores de cada um.',
+      en: 'Screen Pets cards with a pixel art cat, dog, penguin and ant and the colors for each one.',
     },
   },
   {
