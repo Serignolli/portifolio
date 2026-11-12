@@ -80,6 +80,23 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 'rewallet',
+    name: 'ReWallet',
+    category: 'tool',
+    url: 'https://rewallet.serignolli.com/',
+    featured: true,
+    tags: ['React', 'TypeScript', 'Zod'],
+    shot: '/shots/rewallet.webp',
+    description: {
+      pt: 'Rebalanceia a carteira e sugere onde pôr o aporte, sem login: os dados ficam num arquivo seu.',
+      en: 'Rebalances your portfolio and suggests where to invest, no login: your data stays in your file.',
+    },
+    alt: {
+      pt: 'Dashboard do ReWallet com a alocação atual contra a alvo por classe e a sugestão de aporte de R$ 3.000.',
+      en: 'ReWallet dashboard with current vs. target allocation by asset class and a R$ 3,000 contribution suggestion.',
+    },
+  },
+  {
     id: 'moire',
     name: 'Moiré',
     category: 'tool',
@@ -160,23 +177,6 @@ export const projects: Project[] = [
     alt: {
       pt: 'Overlook com page views, eventos e visitantes somados e um gráfico de page views por projeto.',
       en: 'Overlook with total page views, events and visitors and a chart of page views per project.',
-    },
-  },
-  {
-    id: 'rewallet',
-    name: 'ReWallet',
-    category: 'tool',
-    url: 'https://rewallet.serignolli.com/',
-    featured: true,
-    tags: ['React', 'TypeScript', 'Zod'],
-    shot: '/shots/rewallet.webp',
-    description: {
-      pt: 'Rebalanceia a carteira e sugere onde pôr o aporte, sem login: os dados ficam num arquivo seu.',
-      en: 'Rebalances your portfolio and suggests where to invest, no login: your data stays in your file.',
-    },
-    alt: {
-      pt: 'Dashboard do ReWallet com a alocação atual contra a alvo por classe e a sugestão de aporte de R$ 3.000.',
-      en: 'ReWallet dashboard with current vs. target allocation by asset class and a R$ 3,000 contribution suggestion.',
     },
   },
 
